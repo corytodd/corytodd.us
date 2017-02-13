@@ -1,0 +1,10 @@
+# Site Settings
+title: 'corytodd.us'
+description: 'Software Engineer, lobster enthusiast, currently earning my masters in computer science'
+url: 'http://localhost:3000' # the base hostname & protocol for your site
+footer_text: 'Show some love to the Materialize CSS team!'
+
+# Admin Settings
+admin_name: 'Cory Todd'
+admin_email: 'me@corytodd.us'
+

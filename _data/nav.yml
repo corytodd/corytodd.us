@@ -1,0 +1,5 @@
+main:
+    - { url: '/', text: 'Home' }
+    - { url: '/about', text: 'About' }
+    - { url: 'https://github.com/corytodd', text: 'Github' }
+    - { url: 'https://bitbucket.org/corytodd', text: 'Bitbucket' }    
