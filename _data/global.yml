@@ -1,7 +1,7 @@
 # Site Settings
 title: 'corytodd.us'
 description: 'Software Engineer, lobster enthusiast, current gradute student'
-url: 'http://localhost:3000' # the base hostname & protocol for your site
+url: 'http://corytodd.us' # the base hostname & protocol for your site
 copyright: '© 2017 Cory Todd'
 footer_text: 'Show some love to the Materialize CSS team!'
 
