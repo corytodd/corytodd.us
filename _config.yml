@@ -23,6 +23,7 @@ unpublished: false
 # Plugins
 whitelist: []
 gems:
+  #- jekyll-browsersync
   - jekyll-feed
   #- jekyll-paginate
 
