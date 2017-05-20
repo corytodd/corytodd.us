@@ -35,26 +35,14 @@
     <div class="section no-pad-bot ilike-blue-container" id="index-banner">
         <div class="container">
             <div class="row">
-
+                <h1 class="right">{{ site.data.global.title }}</h1>
                 <div class="col s3">
                     <img src="/assets/lobster_alpha.svg" alt="Lobster" id="lobster">
                 </div>
-
                 <div class="col s9">
-                    <h1 class="right">{{ site.data.global.title }}</h1>
                     <h5 class="right">{{ site.data.global.description }}</h5>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container">
-        <ul>
-
-            {% for item in site.data.nav.main %}
-                <li><a href="{{ item.url}}">{{ item.text }}</a></li>
-            {% endfor %}
-
-        </ul>
     </div>
 

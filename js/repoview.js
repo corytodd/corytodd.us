@@ -1,19 +1,33 @@
 (function($){
-    $(document).ready(function() {        
+    $(document).ready(function() {     
+        var results = [];   
         ghids.forEach(function(id) {
-            lookupGithubProjects(id, $('#github-panel'));
+            lookupGithubProjects(id, function(data) {
+                
+                results.push(data);
+                if(ghids.length === results.length) {
+
+                    var allProjects = [].concat.apply([], results);
+                    allProjects.sort(function(a, b) {
+                        if(a.stars > b.stars) return -1;
+                        if(a.stars < b.stars) return 1;
+                        return 0;
+                    })
+                    $("#github-panel").append(allProjects.map(Item).join(''));
+                }
+            });
         });            
     }); // end of document ready
 })(jQuery); // end of jQuery name space
 
 
 const ghids = ["corytodd", "catodd"];
-const Item = ({ url, name, desc }) => `
+const Item = ({ url, name, desc, stars }) => `
     <p><a href="${url}"class="list-group-item">${name}</a> - ${desc}</p>
     `; 
 
 
-function lookupGithubProjects(id, div) {
+function lookupGithubProjects(id, cb) {
 
     var me = new Gh3.User(id);
     var myRepos = new Gh3.Repositories(me);    
@@ -42,10 +56,15 @@ function lookupGithubProjects(id, div) {
                         throw err
                     }
 
-                    templatedData.push({ url: res.url, name: res.name, desc: res.description});
+                    templatedData.push({ 
+                            url: res.html_url,
+                            name: res.name,
+                            desc: res.description,
+                            stars: res.stargazers_count
+                        });
 
                     if(templatedData.length  === myRepos.repositories.length) {
-                        div.append(templatedData.map(Item).join(''));
+                        cb(templatedData);
                     }
                 });    
             }, this);
