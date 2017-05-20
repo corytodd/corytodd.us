@@ -19,6 +19,7 @@ GEM
       safe_yaml (~> 1.0)
     jekyll-feed (0.8.0)
       jekyll (~> 3.3)
+    jekyll-paginate (1.1.0)
     jekyll-sass-converter (1.5.0)
       sass (~> 3.4)
     jekyll-watch (1.5.0)
@@ -51,14 +52,20 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  addressable (= 2.5.0)
+  bundler
+  ffi (= 1.9.17)
   jekyll (= 3.4.0)
   jekyll-feed (~> 0.6)
+  jekyll-paginate
   materialize-sass
+  sass (= 3.4.23)
+  thread_safe (= 0.3.5)
   tzinfo-data
   wdm (>= 0.1.0)
 
 RUBY VERSION
-   ruby 2.3.1p112
+   ruby 2.3.3p222
 
 BUNDLED WITH
-   1.14.3
+   1.15.0
