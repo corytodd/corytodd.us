@@ -15,9 +15,15 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
 #index-banner {
   background-color:  #5f5f5f;
 }
+ 
+#index-logo {
+    width: 25%;
+}   
+  
 
 footer.page-footer,
 footer.page-footer.footer-copyright {
