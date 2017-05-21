@@ -7,6 +7,8 @@
                 results.push(data);
                 if(ghids.length === results.length) {
 
+                    $("#spinner").hide("slow");
+
                     var allProjects = [].concat.apply([], results);
                     allProjects.sort(function(a, b) {
                         if(a.stars > b.stars) return -1;
