@@ -24,9 +24,18 @@
 
 
 const ghids = ["corytodd", "catodd"];
-const Item = ({ url, name, desc, stars }) => `
-    <p><a href="${url}"class="list-group-item">${name}</a> - ${desc}</p>
-    `; 
+const Item = ({ url, lang, name, desc, stars }) => 
+// `
+//     <p><a href="${url}"class="list-group-item"><span class="badge" data-badge-caption="stars">${stars}</span>${name}</a> - ${desc}</p>
+//     `; 
+     `
+     <li class="collection-item">
+        <span class="title"><h5><a href="${url}">${name}</a></h5></span>
+        <p>${lang}<br>
+         ${desc}
+        </p>
+     </li>
+    `;
 
 
 function lookupGithubProjects(id, cb) {
@@ -62,7 +71,8 @@ function lookupGithubProjects(id, cb) {
                             url: res.html_url,
                             name: res.name,
                             desc: res.description,
-                            stars: res.stargazers_count
+                            stars: res.stargazers_count,
+                            lang: res.language,
                         });
 
                     if(templatedData.length  === myRepos.repositories.length) {
