@@ -2,7 +2,7 @@ source "https://rubygems.org"
 ruby RUBY_VERSION
 
 
-gem "jekyll", "3.4.3"
+gem "jekyll", "3.6.3"
 gem 'jekyll-paginate'
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
@@ -21,7 +21,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bundler'
 gem 'addressable', '2.5.1'
 gem 'sass', '3.4.24'
-gem 'ffi', '1.9.17'
+gem 'ffi', '1.9.24'
 gem 'thread_safe', '0.3.5'
 gem 'materialize-sass'
 
