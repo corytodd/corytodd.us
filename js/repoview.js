@@ -48,7 +48,7 @@ function lookupGithubProjects(id, cb) {
     myRepos.fetch(
         {
             page : 1, 
-            per_page : 50, 
+            per_page : 15, 
             direction : "desc"
         }, 
         "next",
