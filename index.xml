@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cory Todd</title>
+    <link>https://corytodd.us/</link>
+    <description>Recent content on Cory Todd</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 24 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://corytodd.us/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://corytodd.us/about/</link>
+      <pubDate>Fri, 24 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://corytodd.us/about/</guid>
+      <description>Cory has been writing software for Windows, Linux, and embedded devices for more than 10 years. From the early days of programming text-based RPGs and his TI-83+ calculator, he has had a strong passion for solving interesting problems. He enjoys helping teams and systems work together by improving automation and identifying bottlenecks. Since completing his MS in computer science from Georgia Tech in 2018 he has found a renewed purpose in pursuing new knowledge.</description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>https://corytodd.us/resume/</link>
+      <pubDate>Fri, 24 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://corytodd.us/resume/</guid>
+      <description>10 years of successful software development and innovation. I have extensive experience in the complete development cycle of both hardware and software products. Team collaboration and mentorship are hallmarks of my work.
+Experience Pyramid Technologies, Mesa, AZ — Senior Software Engineer | July 2017 - Present
+ Lead developer on counterfeit currency detection algorithms Extensive custom USB development Design and develop asynchronous task-based architecture on RTOS Mentor coworkers with code-review and training Grow suite of automation tools for CI and build tools  Pyramid Technologies, Mesa, AZ — Software Engineer | November 2012 - July 2017</description>
+    </item>
+    
+  </channel>
+</rss>
