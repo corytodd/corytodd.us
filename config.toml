@@ -78,16 +78,21 @@ googleAnalytics = "UA-44428097-5"
 [menu]
 
   [[menu.main]]
-    name = "Posts"
-    url = "posts/"
+    name = "About"
+    url = "about-hugo/"
     weight = 10
 
   [[menu.main]]
-    name = "About"
-    url = "about-hugo/"
+    name = "Posts"
+    url = "posts/"
     weight = 20
+
+  [[menu.main]]
+    name = "GPG"
+    url = "gpg/"
+    weight = 30
 
   [[menu.main]]
     name = "CV"
     url = "resume/"
-    weight = 30
+    weight = 50

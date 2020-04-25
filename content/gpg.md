@@ -1,17 +1,22 @@
-How to get the GPG key for cory@ardonyx.io using [wkd].
++++
+title = "GPG Keys"
+date = "2020-04-25"
+data_file = "gpg_partial.html"
+[ author ]
+  name = "Cory Todd"
++++
 
-[wkd]: https://wiki.gnupg.org/WKD
+How to get the GPG key for cory@ardonyx.io using wkd.
 
-#
-# Load the key into gpg
-#
+{{< highlight bash >}}
+gpg --auto-key-locate wkd --locate-keys cory@ardonyx.io
+    pub   rsa2048 2019-11-10 [SC] [expires: 2021-11-10]
+          8FF6320A6D70AEC784BB48BDED5A456212B63FC4
+    uid           [ultimate] Cory Todd <cory@ardonyx.io>
+    sub   rsa2048 2019-11-10 [E] [expires: 2021-11-10]
+{{< /highlight >}}
 
-$ gpg --auto-key-locate wkd --locate-keys cory@ardonyx.io
-pub   rsa2048 2019-11-10 [SC] [expires: 2021-11-10]
-      8FF6320A6D70AEC784BB48BDED5A456212B63FC4
-uid           [ultimate] Cory Todd <cory@ardonyx.io>
-sub   rsa2048 2019-11-10 [E] [expires: 2021-11-10]
-
+{{< highlight bash >}}
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQENBF3Ig5EBCAC0K732yL6WXjZnU757CKa0y8qEcnGW2oO9fsCnCsk/ljQoV2Yd
@@ -42,3 +47,4 @@ yr4rpTvkNpwti7h3yX9OSFNLLl6o9xJwUzqDnDZnNauz5QAl5MOrGe0NrDMZK/EJ
 VvFxJK6tQGQETxR8ppCzEClxTYnKGRORHEs9BBhsh8q85RY=
 =G70h
 -----END PGP PUBLIC KEY BLOCK-----
+{{< /highlight >}}
