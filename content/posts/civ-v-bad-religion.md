@@ -1,6 +1,6 @@
 ---
 title: "Civ V : Bad Religion"
-date: 2020-04-24T19:33:09-07:00
+date: 2020-04-25T19:33:09-07:00
 draft: true
 ---
 
