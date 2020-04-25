@@ -13,3 +13,9 @@ git add .
 git commit -m $message
 
 git push origin master
+
+cd ..
+
+git add .
+
+git commit -m $message
