@@ -26,7 +26,7 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   # Categories are disabled by default.
 
 [params]
-  avatar            = "headshot_1.png"
+  avatar            = "img/headshot_1.png"
   # avatarDescription = "Website author"
 
   dateform        = "Jan 2, 2006"
@@ -36,7 +36,7 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
 
   # Metadata mostly used in document's head
   description = "Software engineer"
-  images = ["coder_1.jpg"]
+  images = ["img/coder_1.jpg"]
   themeColor = "#494f5c"
 
   homeSubtitle = "I help teams make great software"
