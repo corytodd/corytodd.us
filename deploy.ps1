@@ -4,7 +4,7 @@ param (
 
 Write-Host "Deploying updates to Github"
 
-hugo -t hermit
+hugo -t hermit --enableGitInfo
 
 cd public
 
@@ -19,3 +19,5 @@ cd ..
 git add .
 
 git commit -m $message
+
+git push
