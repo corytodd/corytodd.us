@@ -6,9 +6,9 @@ draft: false
 
 ## Starting Fresh
 
-After years of neglect, it is time to revive this website. Instead of making promises about the future, let's just right in with some Raspberry Pi!
+After years of neglect, it is time to revive this website. Instead of making promises about the future, let's jump right in with some Raspberry Pi!
 
-I've been using Pi since the version 1 days and still can't believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7" touchscreen integrated into a Cana case which I find extremely convenient. After having blown up my last board with a stray screw falling directly between a power and (apparently) critical IO pin. Having a case protects the board from me. :smile:
+I've been using Pi since the version 1 days and still can't believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7" touchscreen integrated into a Cana case which I find extremely convenient. After having blown up my last board with a stray screw falling directly between a power and (apparently) critical IO pin. Having a case protects the board from me.  :collision:
 
 I was very excited to learn that Ubuntu 20.04 [will include Pi support](https://wiki.ubuntu.com/FocalFossa/ReleaseNotes). Don't get me wrong, I enjoy Raspbian and all the other images but playing with new distros is always fun. There is an excellent image provided by [Exton](http://ct.exton.se/?p=950) that has everything you need for a quick and easy setup. My goal for this project is to get Kivy up and running with my touchscreen. Time to burn the image!
 
