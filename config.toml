@@ -27,6 +27,7 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
 
 [params]
   avatar            = "img/headshot_1.png"
+  avatarBorder      = "img/avatar-border.svg"
   # avatarDescription = "Website author"
 
   dateform        = "Jan 2, 2006"
