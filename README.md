@@ -1,4 +1,3 @@
-corytodd.us
-===========
+# corytodd.us
 
-Contact and about site for my software development work
+This is my personal site. It is built using Hugo and a modified version of Hermit.
