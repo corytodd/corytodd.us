@@ -75,6 +75,10 @@ googleAnalytics = "UA-44428097-5"
     name = "stackoverflow"
     url = "https://stackoverflow.com/users/1755158"
 
+  [[params.social]]
+    name = "gpg"
+    url = "/gpg"
+
 [menu]
 
   [[menu.main]]
@@ -88,11 +92,6 @@ googleAnalytics = "UA-44428097-5"
     weight = 20
 
   [[menu.main]]
-    name = "GPG"
-    url = "gpg/"
-    weight = 30
-
-  [[menu.main]]
-    name = "CV"
+    name = "Experience"
     url = "resume/"
     weight = 50
