@@ -2,6 +2,8 @@
 title = "Day 0"
 date = 2020-04-24T15:37:53-07:00
 draft = false
+categories = ["Development"]
+tags = ["RaspberryPi", "Ubuntu"]
 +++
 
 ## Starting Fresh

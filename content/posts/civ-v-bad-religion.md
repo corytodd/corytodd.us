@@ -2,6 +2,8 @@
 title = "Civ V : Bad Religion"
 date = 2020-04-26T09:33:09-07:00
 draft = false
+categories = ["Gaming"]
+tags = ["Mods", "VisualStudio"]
 +++
 
 {{< figure src="/img/civ-v-problem.jpg" title="I have a bit of a problem with Civ V" >}}
