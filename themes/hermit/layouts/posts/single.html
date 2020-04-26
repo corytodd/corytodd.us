@@ -19,7 +19,21 @@
 	<main class="site-main section-inner animated fadeIn faster">
 		<article class="thin">
 			<header class="post-header">
-				<div class="post-meta"><span>{{ .Date.Format .Site.Params.dateform }}</span></div>
+				<div class="post-meta">
+					<span>
+						<p>
+							{{ .Date.Format .Site.Params.dateform }}
+							&#183;
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+							{{ if gt .ReadingTime 1 }}
+								{{ .Scratch.Set "readingTime" "minutes" }}
+							{{ else }}
+								{{ .Scratch.Set "readingTime" "minute" }}
+							{{ end }}
+							{{ .ReadingTime }} minute read
+						</p>
+					</span>
+				</div>
 				<h1>{{ .Title }}</h1>
 			</header>
 			<div class="content">

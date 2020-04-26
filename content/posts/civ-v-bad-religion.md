@@ -61,7 +61,7 @@ At this point, we're ready to open the project in your IDE. While I'm sure you _
 
 ### Learning the Code
 
-All the hard work is complete. Now for the fun part of reading and learning about the code. What I like to do with new codebases is to pick some aspect of the program that I understand how to trigger and then read through the code flow surrounding it. For example, barbarian spawning. Try to find the code the controls when barbarians. As a hint, all the interesting code will be in the `Source Files` directory and begin with `Cv`.
+All the hard work is complete. Now for the fun part of reading and learning about the code. What I like to do with new codebases is to pick some aspect of the program that I understand how to trigger and then read through the code flow surrounding it. For example, barbarian spawning. Try to find the code the controls when barbarians [^1]. As a hint, all the interesting code will be in the `Source Files` directory and begin with `Cv`.
 
 Since we're looking for code that affects religion, `CvReligionClasses.cpp` seems like a great place to start.
 
@@ -132,3 +132,5 @@ Dig into the properties of `this` to see all the code that a unit is composed of
 ### Future Work
 
 This kind of change would be great to have an option for in the game setup menu. Future work could add all the mechanics required to expose this feature as an option. Another improvement would be to have a mechanic that discourages AI from harassing you if you're on good terms. This is a big hammer for a small problem that some people may consider more of a cheat than anything. I think these quality-of-life improvements enhance my experience. These are the types of improvements that let me focus on the aspects of the game that I love. 
+
+[^1]:  [`CvBarbarians::DoSpawnBarbarianUnit`](https://gitlab.com/ardonyx/civ-v-mod/-/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658)
