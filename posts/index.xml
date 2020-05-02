@@ -6,8 +6,151 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Sun, 26 Apr 2020 09:33:09 -0700</lastBuildDate>
+		<lastBuildDate>Fri, 01 May 2020 15:02:59 -0700</lastBuildDate>
 		<atom:link href="https://corytodd.us/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Dirmon Utility</title>
+			<link>https://corytodd.us/posts/dirmon-utility/</link>
+			<pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/dirmon-utility/</guid>
+			<description>I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&amp;rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature.</description>
+			<content type="html"><![CDATA[<p>I like to learn how programs work. Sometimes that means watching the installation process using several tools
+from Sysinternals<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> or Nirsoft<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. For today&rsquo;s program of interest, I noticed a large number of files being
+written to the ProgramDirectory for this application. I found this a little suspicious since temporary and
+config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk
+long enough for me to see their names but I saw them flash in the file explorer which was enough to make me
+curious about their nature.</p>
+<h2 id="procmon">Procmon</h2>
+<p>My first step in the analysis is to just sit and watch. Sysinternals provides a tremendous amount of tools that address these
+types of tasks. In this case, I chose <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procmon">Procmon</a> to see exactly what files were getting created and deleted. The first step is
+to set up some filters to focus on the target process and the actions that we suspect are happening. Start simple and add
+more filters so you don&rsquo;t accidentally over-filter the results. This also helps you learn what operations and activities
+can be used in your filter. For example, unless I&rsquo;m inspecting the registry activity, I will exclude all registry activity
+in my filter to avoid the excessive noise.</p>
+<ul>
+<li>Process Name : Limit monitoring to actions performed by only this process</li>
+<li>Operation : Only log operations that are of this type</li>
+</ul>
+<p><img src="/img/procmon_filter.jpg" alt="Filter"></p>
+<p>With the filter in place, launching my application triggered several results. I could see about 5 different files being,
+written, then finally deleted all within a few milliseconds.</p>
+<h2 id="file-spy">File Spy</h2>
+<p>Sysmon is the tool of choice for this type of problem because it has options <em>specifically</em> for capturing file content as
+data comes and goes. However, to fully appreciate the value of this tool I thought it would be a good exercise to develop my
+own, specific solution. Right off the bat, I know the challenges are going to be:</p>
+<ol>
+<li>Getting correct file read access</li>
+<li>Reading the file before it gets deleted</li>
+<li>Not affecting the target process.</li>
+</ol>
+<p>I decided to build my solution around the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.io.filesystemwatcher?view=netcore-3.1">FileSystemWatcher</a> API using dotnet core. Starting from the APIs sample implementation, getting a directory watcher up and running is trivial.</p>
+<h3 id="basic-approach">Basic Approach</h3>
+<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="c1">// Create a new FileSystemWatcher and set its properties.
+</span><span class="c1"></span><span class="n">_watcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileSystemWatcher</span>
+<span class="p">{</span>
+    <span class="n">Path</span> <span class="p">=</span> <span class="n">MonitorDir</span><span class="p">,</span>
+    <span class="c1">// Watch for changes in LastAccess and LastWrite times, and
+</span><span class="c1"></span>    <span class="c1">// the renaming of files or directories.
+</span><span class="c1"></span>    <span class="n">NotifyFilter</span> <span class="p">=</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">LastAccess</span>
+                    <span class="p">|</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">LastWrite</span>
+                    <span class="p">|</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">FileName</span>
+                    <span class="p">|</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">DirectoryName</span><span class="p">,</span>
+    <span class="n">Filter</span> <span class="p">=</span> <span class="n">pattern</span>
+<span class="p">};</span>
+
+<span class="c1">// Add event handlers.
+</span><span class="c1"></span><span class="n">_watcher</span><span class="p">.</span><span class="n">Changed</span> <span class="p">+=</span> <span class="n">OnChanged</span><span class="p">;</span>
+<span class="n">_watcher</span><span class="p">.</span><span class="n">Created</span> <span class="p">+=</span> <span class="n">OnCreated</span><span class="p">;</span>
+<span class="n">_watcher</span><span class="p">.</span><span class="n">Deleted</span> <span class="p">+=</span> <span class="n">OnDeleted</span><span class="p">;</span>
+<span class="n">_watcher</span><span class="p">.</span><span class="n">Renamed</span> <span class="p">+=</span> <span class="n">OnRenamed</span><span class="p">;</span>
+</code></pre></div>
+<p>Since we care about the file contents more than anything else, <code>OnChanged</code> is the only handler that matters. The others will just log the event and immediately return.
+The naive approach:
+<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="n">OnCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">)</span>
+    <span class="n">Logger</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&#34;Snapshot: {0}&gt; {1}&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>has a few problems. The most obvious being that ReadAllText does not open the file in shared mode. The may cause the creating process to error out if it is expecting
+to have exclusive access to the file. Instead, we will need to explicitly set the file sharing mode.
+<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="n">OnCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileStream</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">);</span>
+    <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sr</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamReader</span><span class="p">(</span><span class="n">fs</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+        <span class="n">Logger</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&#34;Snapshot: {0}&gt; {1}&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>This is better and prevents the issue of locking the file inadvertently. However, logging all of this to the console or to file gets out of hand very quickly. A better
+solution is to sequence each change and then write the results to a backup location. Dirmon uses what we call a shadow directory to receive these sequence change
+records. Since writing to disk can be slow, we delegate the task of actually writing the files to a background thread.</p>
+<h3 id="refined-approach">Refined Approach</h3>
+<p>Here we create a second method called <code>OnChangeFast</code> to handle this specific design.
+<div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">void</span> <span class="n">OnChangeFast</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// We only care about change to non-directories
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">ChangeType</span> <span class="p">!=</span> <span class="n">WatcherChangeTypes</span><span class="p">.</span><span class="n">Changed</span> <span class="p">||</span> <span class="n">IsDirectory</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="c1">// Attempt to capture contents without locking the file
+</span><span class="c1"></span>        <span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileStream</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">);</span>
+        <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sr</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamReader</span><span class="p">(</span><span class="n">fs</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+
+            <span class="c1">// We have the contents, determine what change number this is
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(!</span><span class="n">_sequenceCache</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">seq</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">seq</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">_sequenceCache</span><span class="p">.</span><span class="n">TryAdd</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">seq</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+
+            <span class="c1">// Commit this snapshot
+</span><span class="c1"></span>            <span class="n">_memoryDb</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="k">new</span> <span class="n">FileSnapshot</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Path</span><span class="p">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">),</span> <span class="n">text</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Signal data ready
+</span><span class="c1"></span>        <span class="n">_memoryReady</span><span class="p">.</span><span class="n">Release</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Logger</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="s">&#34;OnChangeFast Error ({0} {1})&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ChangeType</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Some things to highlight:</p>
+<ul>
+<li>_memoryDb is a concurrent dictionary</li>
+<li>_memoryReady is a SemaphoreSlim that is incremented every time a snapshot is added to _memoryDb</li>
+<li>_sequenceCache holds a running counter for each file name. Since a directory cannot hold more than one file with the same this is sufficient.</li>
+</ul>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>Having made my rudimentary solution I have a better understanding of the problems that Sysmon can solve. The latter is designed for reliable,
+high-performance analysis, even for kernel-mode processes. My solution, while fun, is not sufficient in terms of robustness or reliability and
+may miss certain events, especially in the case of malicious software. The full source code for Dirmon can be found on my <a href="https://github.com/ardonyx/dirmon">Github</a>.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/sysinternals/">https://docs.microsoft.com/en-us/sysinternals/</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://www.nirsoft.net/">https://www.nirsoft.net/</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Civ V : Bad Religion</title>
@@ -189,7 +332,7 @@
 		</item>
 		
 		<item>
-			<title>Day 0</title>
+			<title>Day 0 with Kivy Pi</title>
 			<link>https://corytodd.us/posts/day-0/</link>
 			<pubDate>Fri, 24 Apr 2020 15:37:53 -0700</pubDate>
 			

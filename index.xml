@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>Dirmon Utility</title>
+      <link>https://corytodd.us/posts/dirmon-utility/</link>
+      <pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/dirmon-utility/</guid>
+      <description>I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&amp;rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature.</description>
+    </item>
+    
+    <item>
       <title>Civ V : Bad Religion</title>
       <link>https://corytodd.us/posts/civ-v-bad-religion/</link>
       <pubDate>Sun, 26 Apr 2020 09:33:09 -0700</pubDate>
@@ -32,7 +41,7 @@ gpg --auto-key-locate wkd --locate-keys cory@ardonyx.io pub rsa4096 2020-05-02 [
     </item>
     
     <item>
-      <title>Day 0</title>
+      <title>Day 0 with Kivy Pi</title>
       <link>https://corytodd.us/posts/day-0/</link>
       <pubDate>Fri, 24 Apr 2020 15:37:53 -0700</pubDate>
       

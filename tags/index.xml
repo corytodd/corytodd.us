@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 26 Apr 2020 09:33:09 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2020 15:02:59 -0700</lastBuildDate>
     
 	<atom:link href="https://corytodd.us/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Windows</title>
+      <link>https://corytodd.us/tags/windows/</link>
+      <pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>
+      
+      <guid>https://corytodd.us/tags/windows/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Mods</title>
