@@ -10,7 +10,7 @@
 <meta itemprop="name" content="Git Merge Alias">
 <meta itemprop="description" content="I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern, maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&rsquo;ll work well together. One feature that&rsquo;s common across all branching models is the need for your target branches in sync. For example, with git-flow you cannot finish a feature if your local develop is behind origin develop.">
 <meta itemprop="datePublished" content="2020-06-28T09:31:42-07:00" />
-<meta itemprop="dateModified" content="2020-06-30T15:24:22-07:00" />
+<meta itemprop="dateModified" content="2020-06-30T15:26:23-07:00" />
 <meta itemprop="wordCount" content="276">
 <meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
 
@@ -22,7 +22,7 @@
 <meta property="og:url" content="https://corytodd.us/posts/git-sync/" />
 <meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/>
 <meta property="article:published_time" content="2020-06-28T09:31:42-07:00" />
-<meta property="article:modified_time" content="2020-06-30T15:24:22-07:00" />
+<meta property="article:modified_time" content="2020-06-30T15:26:23-07:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://corytodd.us/img/coder_1.jpg"/>
 
@@ -96,7 +96,7 @@ work well together. One feature that&rsquo;s common across all branching models 
 with git-flow you cannot finish a feature if your local develop is behind origin develop. The solution is simple enough</p>
 <pre><code>git fetch origin develop:develop
 </code></pre>
-<p>This says to update (or create) your local develop branch based on the latest develop branch on origin[^1]. This is equivalent to</p>
+<p>This says to update (or create) your local develop branch based on the latest develop branch on origin<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. This is equivalent to</p>
 <pre><code>git checkout develop
 git fetch
 git pull
@@ -115,7 +115,14 @@ branch. Your choice.</p>
 git sync develop // fetch and pull just develop without disturbing your current branch
 </code></pre>
 <p>That&rsquo;s all for today!</p>
-<p>[^1] <a href="https://git-scm.com/docs/git-fetch#_examples">https://git-scm.com/docs/git-fetch#_examples</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://git-scm.com/docs/git-fetch#_examples">https://git-scm.com/docs/git-fetch#_examples</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 
 			</div>
 			<hr class="post-end">
@@ -125,7 +132,7 @@ git sync develop // fetch and pull just develop without disturbing your current 
 				</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>276 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-28 09:31 -0700</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/c3e894d41166697dd8c18a9bbf29b115caa3c74a" target="_blank" rel="noopener">c3e894d</a> @ 2020-06-30</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/ec9cdd7516def7c104397e0f06b566f35e65acab" target="_blank" rel="noopener">ec9cdd7</a> @ 2020-06-30</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">

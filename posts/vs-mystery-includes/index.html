@@ -10,7 +10,7 @@
 <meta itemprop="name" content="Visual Studio and The Mysterious Additional Includes">
 <meta itemprop="description" content="There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about where your tools or how to get to them. If you&rsquo;re building strictly for Windows, you don&rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms of surprise and foot-guns.">
 <meta itemprop="datePublished" content="2020-06-30T13:51:51-07:00" />
-<meta itemprop="dateModified" content="2020-06-30T15:24:22-07:00" />
+<meta itemprop="dateModified" content="2020-06-30T15:26:23-07:00" />
 <meta itemprop="wordCount" content="418">
 <meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
 
@@ -22,7 +22,7 @@
 <meta property="og:url" content="https://corytodd.us/posts/vs-mystery-includes/" />
 <meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/>
 <meta property="article:published_time" content="2020-06-30T13:51:51-07:00" />
-<meta property="article:modified_time" content="2020-06-30T15:24:22-07:00" />
+<meta property="article:modified_time" content="2020-06-30T15:26:23-07:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://corytodd.us/img/coder_1.jpg"/>
 
@@ -95,7 +95,7 @@ where your tools or how to get to them. If you&rsquo;re building strictly for Wi
 of surprise and foot-guns.</p>
 <p>Of course, all magic has a perfectly valid explanation. One such explanation is the global build props feature which has an interesting
 and terrifying ability to modify all (new) projects you create with Visual Studio. Years ago I installed a particular tool to help me
-isolate a particularly nasty GDI resource leak[^1]. The tool didn&rsquo;t work but I did find my leak! Of course, it was an HICON and yes, I
+isolate a particularly nasty GDI resource leak<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The tool didn&rsquo;t work but I did find my leak! Of course, it was an HICON and yes, I
 did feel foolish. Anyways, I removed the not-quite-useful leak detector and went on with my life. When I went to create a new project,
 I noticed that there was an additional library that includes paths in the project. Paths that I didn&rsquo;t need and certainly didn&rsquo;t want. They
 were pointing to the library path for the leak detector! How on earth could this happen? I figured the un-install went pear-shaped but
@@ -107,10 +107,19 @@ injected into my new projects! Except for my home directory, this was an entirel
 <pre><code>%AppData%\Local\Microsoft\MSBuild\v4.0\
 </code></pre>
 <p>that holds a smattering of files that can be written in such a way that VS will use them for certain defaults. The docs are not shy about
-saying these are a bad idea[^2]. Before the days of version control and distributed projects, this was probably a very useful
+saying these are a bad idea<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Before the days of version control and distributed projects, this was probably a very useful
 feature. The replacement technology, Props Sheets, is superior in just about every way so I don&rsquo;t see any reason to return to the old ways.</p>
-<p>[^1] <a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code">https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code</a>
-[^2] <a href="https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019">https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code">https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019">https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 
 			</div>
 			<hr class="post-end">
@@ -120,7 +129,7 @@ feature. The replacement technology, Props Sheets, is superior in just about eve
 				</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>418 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-30 13:51 -0700</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/c3e894d41166697dd8c18a9bbf29b115caa3c74a" target="_blank" rel="noopener">c3e894d</a> @ 2020-06-30</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/ec9cdd7516def7c104397e0f06b566f35e65acab" target="_blank" rel="noopener">ec9cdd7</a> @ 2020-06-30</p>
 			</footer>
 		</article>
 		<div class="post-nav thin">

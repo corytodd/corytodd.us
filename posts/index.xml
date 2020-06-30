@@ -21,7 +21,7 @@ where your tools or how to get to them. If you&rsquo;re building strictly for Wi
 of surprise and foot-guns.</p>
 <p>Of course, all magic has a perfectly valid explanation. One such explanation is the global build props feature which has an interesting
 and terrifying ability to modify all (new) projects you create with Visual Studio. Years ago I installed a particular tool to help me
-isolate a particularly nasty GDI resource leak[^1]. The tool didn&rsquo;t work but I did find my leak! Of course, it was an HICON and yes, I
+isolate a particularly nasty GDI resource leak<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The tool didn&rsquo;t work but I did find my leak! Of course, it was an HICON and yes, I
 did feel foolish. Anyways, I removed the not-quite-useful leak detector and went on with my life. When I went to create a new project,
 I noticed that there was an additional library that includes paths in the project. Paths that I didn&rsquo;t need and certainly didn&rsquo;t want. They
 were pointing to the library path for the leak detector! How on earth could this happen? I figured the un-install went pear-shaped but
@@ -33,10 +33,19 @@ injected into my new projects! Except for my home directory, this was an entirel
 <pre><code>%AppData%\Local\Microsoft\MSBuild\v4.0\
 </code></pre>
 <p>that holds a smattering of files that can be written in such a way that VS will use them for certain defaults. The docs are not shy about
-saying these are a bad idea[^2]. Before the days of version control and distributed projects, this was probably a very useful
+saying these are a bad idea<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Before the days of version control and distributed projects, this was probably a very useful
 feature. The replacement technology, Props Sheets, is superior in just about every way so I don&rsquo;t see any reason to return to the old ways.</p>
-<p>[^1] <a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code">https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code</a>
-[^2] <a href="https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019">https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code">https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019">https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 ]]></content>
 		</item>
 		
@@ -53,7 +62,7 @@ work well together. One feature that&rsquo;s common across all branching models 
 with git-flow you cannot finish a feature if your local develop is behind origin develop. The solution is simple enough</p>
 <pre><code>git fetch origin develop:develop
 </code></pre>
-<p>This says to update (or create) your local develop branch based on the latest develop branch on origin[^1]. This is equivalent to</p>
+<p>This says to update (or create) your local develop branch based on the latest develop branch on origin<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. This is equivalent to</p>
 <pre><code>git checkout develop
 git fetch
 git pull
@@ -72,7 +81,14 @@ branch. Your choice.</p>
 git sync develop // fetch and pull just develop without disturbing your current branch
 </code></pre>
 <p>That&rsquo;s all for today!</p>
-<p>[^1] <a href="https://git-scm.com/docs/git-fetch#_examples">https://git-scm.com/docs/git-fetch#_examples</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://git-scm.com/docs/git-fetch#_examples">https://git-scm.com/docs/git-fetch#_examples</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 ]]></content>
 		</item>
 		
