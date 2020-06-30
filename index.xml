@@ -13,6 +13,33 @@
     
     
     <item>
+      <title>Visual Studio and The Mysterious Additional Includes</title>
+      <link>https://corytodd.us/posts/vs-mystery-includes/</link>
+      <pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/vs-mystery-includes/</guid>
+      <description>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about where your tools or how to get to them. If you&amp;rsquo;re building strictly for Windows, you don&amp;rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms of surprise and foot-guns.</description>
+    </item>
+    
+    <item>
+      <title>Git Merge Alias</title>
+      <link>https://corytodd.us/posts/git-sync/</link>
+      <pubDate>Sun, 28 Jun 2020 09:31:42 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/git-sync/</guid>
+      <description>I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern, maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&amp;rsquo;ll work well together. One feature that&amp;rsquo;s common across all branching models is the need for your target branches in sync. For example, with git-flow you cannot finish a feature if your local develop is behind origin develop.</description>
+    </item>
+    
+    <item>
+      <title>Large Address Aware</title>
+      <link>https://corytodd.us/posts/large-address-aware/</link>
+      <pubDate>Fri, 26 Jun 2020 07:12:47 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/large-address-aware/</guid>
+      <description>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&amp;rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to.</description>
+    </item>
+    
+    <item>
       <title>Dirmon Utility</title>
       <link>https://corytodd.us/posts/dirmon-utility/</link>
       <pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>

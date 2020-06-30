@@ -7,17 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 01 May 2020 15:02:59 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2020 13:51:51 -0700</lastBuildDate>
     
 	<atom:link href="https://corytodd.us/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>MSVC</title>
+      <link>https://corytodd.us/tags/msvc/</link>
+      <pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
+      
+      <guid>https://corytodd.us/tags/msvc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Windows</title>
       <link>https://corytodd.us/tags/windows/</link>
-      <pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>
+      <pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
       
       <guid>https://corytodd.us/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://corytodd.us/tags/git/</link>
+      <pubDate>Sun, 28 Jun 2020 09:31:42 -0700</pubDate>
+      
+      <guid>https://corytodd.us/tags/git/</guid>
       <description></description>
     </item>
     

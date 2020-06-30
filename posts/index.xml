@@ -6,8 +6,106 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Fri, 01 May 2020 15:02:59 -0700</lastBuildDate>
+		<lastBuildDate>Tue, 30 Jun 2020 13:51:51 -0700</lastBuildDate>
 		<atom:link href="https://corytodd.us/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Visual Studio and The Mysterious Additional Includes</title>
+			<link>https://corytodd.us/posts/vs-mystery-includes/</link>
+			<pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/vs-mystery-includes/</guid>
+			<description>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about where your tools or how to get to them. If you&amp;rsquo;re building strictly for Windows, you don&amp;rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms of surprise and foot-guns.</description>
+			<content type="html"><![CDATA[<p>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about
+where your tools or how to get to them. If you&rsquo;re building strictly for Windows, you don&rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms
+of surprise and foot-guns.</p>
+<p>Of course, all magic has a perfectly valid explanation. One such explanation is the global build props feature which has an interesting
+and terrifying ability to modify all (new) projects you create with Visual Studio. Years ago I installed a particular tool to help me
+isolate a particularly nasty GDI resource leak[^1]. The tool didn&rsquo;t work but I did find my leak! Of course, it was an HICON and yes, I
+did feel foolish. Anyways, I removed the not-quite-useful leak detector and went on with my life. When I went to create a new project,
+I noticed that there was an additional library that includes paths in the project. Paths that I didn&rsquo;t need and certainly didn&rsquo;t want. They
+were pointing to the library path for the leak detector! How on earth could this happen? I figured the un-install went pear-shaped but
+all signs indicated that it was removed. No sign of it in the registry, program files, or even my AppData folder. Since no actual libraries were getting linked I ignored the problem and went on with my life. Just a minor annoyance.</p>
+<p>Well, a few years go by and I eventually upgrade my hardware and install Windows after a bad experience with the Win 10 insiders program.
+Once the dust settled, I got back to work writing some code and was utterly shocked that the mysterious link references were still getting
+injected into my new projects! Except for my home directory, this was an entirely fresh installation.</p>
+<p>After some research, I learned about global build props. There is a folder</p>
+<pre><code>%AppData%\Local\Microsoft\MSBuild\v4.0\
+</code></pre>
+<p>that holds a smattering of files that can be written in such a way that VS will use them for certain defaults. The docs are not shy about
+saying these are a bad idea[^2]. Before the days of version control and distributed projects, this was probably a very useful
+feature. The replacement technology, Props Sheets, is superior in just about every way so I don&rsquo;t see any reason to return to the old ways.</p>
+<p>[^1] <a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code">https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code</a>
+[^2] <a href="https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019">https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019</a></p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Git Merge Alias</title>
+			<link>https://corytodd.us/posts/git-sync/</link>
+			<pubDate>Sun, 28 Jun 2020 09:31:42 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/git-sync/</guid>
+			<description>I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern, maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&amp;rsquo;ll work well together. One feature that&amp;rsquo;s common across all branching models is the need for your target branches in sync. For example, with git-flow you cannot finish a feature if your local develop is behind origin develop.</description>
+			<content type="html"><![CDATA[<p>I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern,
+maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&rsquo;ll
+work well together. One feature that&rsquo;s common across all branching models is the need for your target branches in sync. For example,
+with git-flow you cannot finish a feature if your local develop is behind origin develop. The solution is simple enough</p>
+<pre><code>git fetch origin develop:develop
+</code></pre>
+<p>This says to update (or create) your local develop branch based on the latest develop branch on origin[^1]. This is equivalent to</p>
+<pre><code>git checkout develop
+git fetch
+git pull
+</code></pre>
+<p>Note that the equivalence is only valid if your merge can be fast-forwarded. If you made the mistake of making local develop changes
+that now conflict with origin, you are on your own.</p>
+<p>Well, the odds of remembering that and <em>not</em> having to search Stack Overflow again are slim. Instead, we can make an alias to make this
+a little easier to remember. These two aliases can be added to your git config to enable syncing on a specified branch or a hardcoded
+branch. Your choice.</p>
+<pre><code>[alias]
+    sync = &quot;!f(){ git fetch origin ${1}:${1}; };f&quot;
+    synca = &quot;!f(){ git fetch origin develop:develop &amp;&amp; git fetch origin master:master; };f&quot;
+</code></pre>
+<p>The ${1} takes the first argument following your alias command.</p>
+<pre><code>git synca        // fetch and sync both develop and master branches without disturbing your current branch
+git sync develop // fetch and pull just develop without disturbing your current branch
+</code></pre>
+<p>That&rsquo;s all for today!</p>
+<p>[^1] <a href="https://git-scm.com/docs/git-fetch#_examples">https://git-scm.com/docs/git-fetch#_examples</a></p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Large Address Aware</title>
+			<link>https://corytodd.us/posts/large-address-aware/</link>
+			<pubDate>Fri, 26 Jun 2020 07:12:47 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/large-address-aware/</guid>
+			<description>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&amp;rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to.</description>
+			<content type="html"><![CDATA[<p>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to. LAA does not make any sense for a Dll since it is up to the executable to provide the address space.</p>
+<p>The day finally came where we needed to use some C++17 features on MSVC which required VS 15.7. Since we use CMake, this process is mostly transparent and our quirks
+files take care of the oddities on each compiler. What we were not prepared for was the new option <code>LARGEADDRESSAWARE:ON</code> to be the default. Furthermore, you can&rsquo;t
+set it to off because then compiler yells at you - &ldquo;Dlls don&rsquo;t support this feature&rdquo;. Well yeah, then why is it default to on for a dynamic library?! Disabling the option at compile time is not possible which means we need to add an extra step our post process. Not a huge deal, we have the pipeline ready to go.</p>
+<p>The solution depends on <code>editbin</code> which is part of the Windows SDK. You can find this on your developer command prompt or just peek in your VS install directory 
+under <code>VC/Tools/MSVC/&lt;version&gt;/bin/&lt;host&gt;</code>.</p>
+<pre><code>editbin /NOLOGO /LARGEADDRESSAWARE:NO libfoo.dll
+
+libfoo.dll : warning LNK4259: '/LARGEADDRESS:NO' is not compatible with '/HIGHENTROPYVA'; image may not run
+</code></pre>
+<p>Those warnings at the end are interesting. Apparently, the high entropy virtual address flag is set as well. Fortunately, we 
+can clear that directly in the CMake file.</p>
+<pre><code>if(MSVC)
+    set(CMAKE_EXE_LINKER_FLAGS &quot;${CMAKE_EXE_LINKER_FLAGS} /HIGHENTROPYVA:NO&quot;)
+    set(CMAKE_SHARED_LINKER_FLAGS &quot;${CMAKE_SHARED_LINKER_FLAGS} /HIGHENTROPYVA:NO&quot;)
+endif(MSVC)
+</code></pre>
+<p>which enables the post process to finish without any warnings.</p>
+<pre><code>editbin /NOLOGO /LARGEADDRESSAWARE:NO libfoo.dll
+</code></pre>
+<p>With these new features on the build system, we&rsquo;re back in business.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Dirmon Utility</title>
