@@ -37,4 +37,4 @@ The ${1} takes the first argument following your alias command.
             
 That's all for today!
 
-[^1] https://git-scm.com/docs/git-fetch#_examples
+[^1]: https://git-scm.com/docs/git-fetch#_examples

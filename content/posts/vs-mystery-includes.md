@@ -30,5 +30,5 @@ that holds a smattering of files that can be written in such a way that VS will 
 saying these are a bad idea[^2]. Before the days of version control and distributed projects, this was probably a very useful
 feature. The replacement technology, Props Sheets, is superior in just about every way so I don't see any reason to return to the old ways. 
 
-[^1] https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code
-[^2] https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019
+[^1]: https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code
+[^2]: https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019
