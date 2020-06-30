@@ -1,7 +1,7 @@
 +++
 title = "Visual Studio and The Mysterious Additional Includes"
 date = 2020-06-30T13:51:51-07:00
-draft = true
+draft = false
 categories = ["Development"]
 tags = ["Windows", "MSVC"]
 +++

@@ -1,7 +1,7 @@
 +++
 title = "Git Merge Alias"
 date = 2020-06-28T09:31:42-07:00
-draft = true
+draft = false
 categories = ["Development"]
 tags = ["Git"]
 +++
