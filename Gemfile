@@ -24,6 +24,8 @@ gem 'sass', '3.4.24'
 gem 'ffi', '1.9.24'
 gem 'thread_safe', '0.3.5'
 gem 'materialize-sass'
+gem "kramdown", ">= 2.3.0"
+
 
 # Avoid polling for changes on Windows
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
