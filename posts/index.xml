@@ -307,7 +307,7 @@ may miss certain events, especially in the case of malicious software. The full 
 </ol>
 <hr>
 <h3 id="building-the-sdk">Building the SDK</h3>
-<p>At this point, we&rsquo;re ready to open the project in your IDE. While I&rsquo;m sure you <em>could</em> get this to compile and debug from VS Code or CLion, I don&rsquo;t think it is worth the effort. This is not a cross-platform project so just use the right tool for the job. If you chose to use VS 2019, you can download the SLN project file <a href="https://gitlab.com/ardonyx/civ-v-mod/-/blob/27a7f8059ccfc1250b6929159038ecf53851fcfd/CvGameCoreDLL.vs2019.sln">I&rsquo;ve already created</a>. Open the SLN file in the appropriate version of VS when you&rsquo;re ready to continue.</p>
+<p>At this point, we&rsquo;re ready to open the project in your IDE. While I&rsquo;m sure you <em>could</em> get this to compile and debug from VS Code or CLion, I don&rsquo;t think it is worth the effort. This is not a cross-platform project so just use the right tool for the job. If you chose to use VS 2019, you can download the SLN project file <a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL.vs2019.sln">I&rsquo;ve already created</a>. Open the SLN file in the appropriate version of VS when you&rsquo;re ready to continue.</p>
 <ol>
 <li>
 <p>Make sure you&rsquo;ve created your initial git commit with the provided ignore file. If you added a new SLN file, make sure that gets added too. For VS 2019 users, make sure to check that v90 is selected for the projects&rsquo; platform toolset. Right-click on each project and navigate to <code>Properties-&gt;General-&gt;Platform Toolset</code> to check this setting.</p>
@@ -406,7 +406,7 @@ may miss certain events, especially in the case of malicious software. The full 
 <hr>
 <h3 id="testing-and-debugging">Testing and Debugging</h3>
 <p>Now we can test our new mod. If you want to get a handle on how this game works, it is supremely helpful to know how to attach the debugger to your running game. To make the debugging experience easier, we need to make sure we enable debug symbols. Check that <code>Properties-&gt;C/C++-&gt;General-&gt;Debug Information Format</code> is set to Program Database. While you&rsquo;re there, let&rsquo;s update the output file name to match the name of the DLL that Civ will expect. Set <code>Properties-&gt;Linker-&gt;General-&gt;Output File</code> to <code>$(OutDir)CvGameCore_Expansion2.dll</code>.</p>
-<p><a href="https://gitlab.com/ardonyx/civ-v-mod/-/blob/master/deploy.bat">Here</a> is the deployment script that I use to push my DLL and PDBs to the Civ runtime directory. <em>This must be run as admin if you have Steam installed to the default location</em>. Once you have the DLLs and PDBs in place, launch Civ V.</p>
+<p><a href="https://github.com/corytodd/CivVDLLMod/blob/master/deploy.bat">Here</a> is the deployment script that I use to push my DLL and PDBs to the Civ runtime directory. <em>This must be run as admin if you have Steam installed to the default location</em>. Once you have the DLLs and PDBs in place, launch Civ V.</p>
 <ol>
 <li>Wait for Civ V to fully load</li>
 <li>Start a local game with your favorite configuration</li>
@@ -438,7 +438,7 @@ may miss certain events, especially in the case of malicious software. The full 
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><a href="https://gitlab.com/ardonyx/civ-v-mod/-/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658"><code>CvBarbarians::DoSpawnBarbarianUnit</code></a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658"><code>CvBarbarians::DoSpawnBarbarianUnit</code></a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
