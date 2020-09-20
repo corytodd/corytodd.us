@@ -40,7 +40,7 @@ Civilization V has two forms of mods. The first version uses Lua, XML, custom da
 
 ### Building the SDK
 
-At this point, we're ready to open the project in your IDE. While I'm sure you _could_ get this to compile and debug from VS Code or CLion, I don't think it is worth the effort. This is not a cross-platform project so just use the right tool for the job. If you chose to use VS 2019, you can download the SLN project file [I've already created](https://gitlab.com/ardonyx/civ-v-mod/-/blob/27a7f8059ccfc1250b6929159038ecf53851fcfd/CvGameCoreDLL.vs2019.sln). Open the SLN file in the appropriate version of VS when you're ready to continue. 
+At this point, we're ready to open the project in your IDE. While I'm sure you _could_ get this to compile and debug from VS Code or CLion, I don't think it is worth the effort. This is not a cross-platform project so just use the right tool for the job. If you chose to use VS 2019, you can download the SLN project file [I've already created](https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL.vs2019.sln). Open the SLN file in the appropriate version of VS when you're ready to continue. 
 
 1. Make sure you've created your initial git commit with the provided ignore file. If you added a new SLN file, make sure that gets added too. For VS 2019 users, make sure to check that v90 is selected for the projects' platform toolset. Right-click on each project and navigate to `Properties->General->Platform Toolset` to check this setting.
 
@@ -106,7 +106,7 @@ Make this change in `CvReligionClasses::ChooseProphetConversionCity` and a simil
 
 Now we can test our new mod. If you want to get a handle on how this game works, it is supremely helpful to know how to attach the debugger to your running game. To make the debugging experience easier, we need to make sure we enable debug symbols. Check that `Properties->C/C++->General->Debug Information Format` is set to Program Database. While you're there, let's update the output file name to match the name of the DLL that Civ will expect. Set `Properties->Linker->General->Output File` to `$(OutDir)CvGameCore_Expansion2.dll`. 
 
-[Here](https://gitlab.com/ardonyx/civ-v-mod/-/blob/master/deploy.bat) is the deployment script that I use to push my DLL and PDBs to the Civ runtime directory. *This must be run as admin if you have Steam installed to the default location*. Once you have the DLLs and PDBs in place, launch Civ V.
+[Here](https://github.com/corytodd/CivVDLLMod/blob/master/deploy.bat) is the deployment script that I use to push my DLL and PDBs to the Civ runtime directory. *This must be run as admin if you have Steam installed to the default location*. Once you have the DLLs and PDBs in place, launch Civ V.
 
 1. Wait for Civ V to fully load
 2. Start a local game with your favorite configuration
@@ -135,4 +135,4 @@ Dig into the properties of `this` to see all the code that a unit is composed of
 
 This kind of change would be great to have an option for in the game setup menu. Future work could add all the mechanics required to expose this feature as an option. Another improvement would be to have a mechanic that discourages AI from harassing you if you're on good terms. This is a big hammer for a small problem that some people may consider more of a cheat than anything. I think these quality-of-life improvements enhance my experience. These are the types of improvements that let me focus on the aspects of the game that I love. 
 
-[^1]:  [`CvBarbarians::DoSpawnBarbarianUnit`](https://gitlab.com/ardonyx/civ-v-mod/-/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658)
+[^1]:  [`CvBarbarians::DoSpawnBarbarianUnit`](https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658)
