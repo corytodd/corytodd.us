@@ -8,22 +8,16 @@
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Civ V : Bad Religion">
-<meta itemprop="description" content="I have a bit of a problem with Civ V   Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable.">
-<meta itemprop="datePublished" content="2020-04-26T09:33:09-07:00" />
+<meta itemprop="description" content="I have a bit of a problem with Civ V   Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable."><meta itemprop="datePublished" content="2020-04-26T09:33:09-07:00" />
 <meta itemprop="dateModified" content="2020-09-20T15:15:37-07:00" />
-<meta itemprop="wordCount" content="1901">
-<meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
-
-
-
-<meta itemprop="keywords" content="Mods,VisualStudio," />
-<meta property="og:title" content="Civ V : Bad Religion" />
+<meta itemprop="wordCount" content="1900"><meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
+<meta itemprop="keywords" content="Mods,VisualStudio," /><meta property="og:title" content="Civ V : Bad Religion" />
 <meta property="og:description" content="I have a bit of a problem with Civ V   Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://corytodd.us/posts/civ-v-bad-religion/" />
-<meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/>
+<meta property="og:url" content="https://corytodd.us/posts/civ-v-bad-religion/" /><meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-26T09:33:09-07:00" />
 <meta property="article:modified_time" content="2020-09-20T15:15:37-07:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://corytodd.us/img/coder_1.jpg"/>
 
@@ -91,8 +85,7 @@
 				<h1>Civ V : Bad Religion</h1>
 			</header>
 			<div class="content">
-				<figure>
-    <img src="/img/civ-v-problem.jpg"/> <figcaption>
+				<figure><img src="/img/civ-v-problem.jpg"/><figcaption>
             <h4>I have a bit of a problem with Civ V</h4>
         </figcaption>
 </figure>
@@ -128,7 +121,7 @@
 <p>At this point, we&rsquo;re ready to open the project in your IDE. While I&rsquo;m sure you <em>could</em> get this to compile and debug from VS Code or CLion, I don&rsquo;t think it is worth the effort. This is not a cross-platform project so just use the right tool for the job. If you chose to use VS 2019, you can download the SLN project file <a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL.vs2019.sln">I&rsquo;ve already created</a>. Open the SLN file in the appropriate version of VS when you&rsquo;re ready to continue.</p>
 <ol>
 <li>
-<p>Make sure you&rsquo;ve created your initial git commit with the provided ignore file. If you added a new SLN file, make sure that gets added too. For VS 2019 users, make sure to check that v90 is selected for the projects&rsquo; platform toolset. Right-click on each project and navigate to <code>Properties-&gt;General-&gt;Platform Toolset</code> to check this setting.</p>
+<p>Make sure you&rsquo;ve created your initial git commit with the provided ignore file. If you added a new SLN file, make sure that gets added too. For VS 2019 users, make sure to check that v90 is selected for the projects' platform toolset. Right-click on each project and navigate to <code>Properties-&gt;General-&gt;Platform Toolset</code> to check this setting.</p>
 </li>
 <li>
 <p>There are three projects in the solution, each containing the name <code>CvGameCoreDLL</code>. The first project is the original game. <code>_Expansion1</code> is Gods and Kids, and <code>_Expansion2</code> is Brave New World. Since we&rsquo;re talking about modifying religion, we will be using the <code>_Expansion2</code> project. Right-click on the other two projects and select &ldquo;Unload Project&rdquo; This prevents us from modifying the wrong source files since each project has mostly the same code, more or less.</p>
@@ -150,8 +143,7 @@
 </span><span class="c1">// Generated from the TEXTINCLUDE 2 resource.
 </span><span class="c1">//
 </span><span class="c1">// #include &#34;afxres.h&#34; //&lt; Comment this out
-</span><span class="hl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;windows.h&#34;   //&lt; Add this</span><span class="cp">
-</span></span></code></pre></td></tr></table>
+</span><span class="hl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;windows.h&#34;   //&lt; Add this</span></span></code></pre></td></tr></table>
 </div>
 </div>
 <ol start="4">
@@ -166,8 +158,7 @@
 <h3 id="learning-the-code">Learning the Code<a href="#learning-the-code" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>All the hard work is complete. Now for the fun part of reading and learning about the code. What I like to do with new codebases is to pick some aspect of the program that I understand how to trigger and then read through the code flow surrounding it. For example, barbarian spawning. Try to find the code the controls when barbarians <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. As a hint, all the interesting code will be in the <code>Source Files</code> directory and begin with <code>Cv</code>.</p>
 <p>Since we&rsquo;re looking for code that affects religion, <code>CvReligionClasses.cpp</code> seems like a great place to start.</p>
-<figure>
-    <img src="/img/civ-v-classes.jpg"/> <figcaption>
+<figure><img src="/img/civ-v-classes.jpg"/><figcaption>
             <h4>Best. Function. Names. Ever.</h4>
         </figcaption>
 </figure>
@@ -196,8 +187,7 @@
 <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">iPlayerLoop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">iPlayerLoop</span> <span class="o">&lt;</span> <span class="n">MAX_CIV_PLAYERS</span><span class="p">;</span> <span class="n">iPlayerLoop</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>   
     <span class="n">CvPlayer</span> <span class="o">&amp;</span><span class="n">kLoopPlayer</span> <span class="o">=</span> <span class="n">GET_PLAYER</span><span class="p">((</span><span class="n">PlayerTypes</span><span class="p">)</span><span class="n">iPlayerLoop</span><span class="p">);</span>
     <span class="k">if</span><span class="p">(</span><span class="n">kLoopPlayer</span><span class="p">.</span><span class="n">isAlive</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">iPlayerLoop</span> <span class="o">!=</span> <span class="n">m_pPlayer</span><span class="o">-&gt;</span><span class="n">GetID</span><span class="p">())</span> <span class="p">{</span>
-        <span class="p">...</span>
-</code></pre></td></tr></table>
+        <span class="p">...</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>Wouldn&rsquo;t it be cool if they just skipped us entirely? We just need a way to tell if the player is <em>us</em> or another AI. We can inspect the properties of kLoopPlayer which is of type <code>CvPlayer</code>. Conveniently, there is a function that sounds like it will do what we need. <code>bool isHuman() const;</code> is listed in the <code>CvPlayer.h</code> file and if we inspect all references to this function, the current usage implies that it will return true if the instance is not an AI. Let&rsquo;s give it a shot. <code>!kPlayerLoop.isHuman()</code> should do the trick.</p>
@@ -216,8 +206,7 @@
     <span class="c1">// Only spread to living AI players
 </span><span class="c1"></span>    <span class="n">CvPlayer</span> <span class="o">&amp;</span><span class="n">kLoopPlayer</span> <span class="o">=</span> <span class="n">GET_PLAYER</span><span class="p">((</span><span class="n">PlayerTypes</span><span class="p">)</span><span class="n">iPlayerLoop</span><span class="p">);</span>
     <span class="k">if</span><span class="p">(</span><span class="n">kLoopPlayer</span><span class="p">.</span><span class="n">isAlive</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">iPlayerLoop</span> <span class="o">!=</span> <span class="n">m_pPlayer</span><span class="o">-&gt;</span><span class="n">GetID</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">kPlayerLoop</span><span class="p">.</span><span class="n">isHuman</span><span class="p">())</span> <span class="p">{</span>
-        <span class="p">...</span>
-</code></pre></td></tr></table>
+        <span class="p">...</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>Make this change in <code>CvReligionClasses::ChooseProphetConversionCity</code> and a similar change in <code>CvReligionClasses::ChooseMissionaryTargetCity</code>. Compile the code to make sure everything is still working.</p>
@@ -242,8 +231,7 @@
 <p>Religion usually takes a few turns to establish and then a few more turns before the AI starts harassing you. You can either play and just wait to see if the AI leaves you alone or you play with your new debugger. Let&rsquo;s do the latter. We&rsquo;ll start by finding some interesting places to place breakpoints.</p>
 <p>One quick place to add a breakpoint is in <code>CvUnit::getName</code>. This called whenever the player selects a unit and is used to look up the custom or default name. If the breakpoint is a red circle, that means the breakpoint installation worked. If it is white with a red ring, that means you might not have loaded the DLL or PDBs properly. Try the previous section again.</p>
 <p>With the breakpoint in place, hit F5 to continue the game. Select either your warrior or settler which should trigger the breakpoint. From here, you should see</p>
-<figure>
-    <img src="/img/civ-v-cvunit.jpg"/> <figcaption>
+<figure><img src="/img/civ-v-cvunit.jpg"/><figcaption>
             <h4>CvUnit Locals</h4>
         </figcaption>
 </figure>
@@ -256,7 +244,7 @@
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658"><code>CvBarbarians::DoSpawnBarbarianUnit</code></a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658"><code>CvBarbarians::DoSpawnBarbarianUnit</code></a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
@@ -267,7 +255,7 @@
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://corytodd.us/tags/mods">Mods</a></span><span class="tag"><a href="https://corytodd.us/tags/visualstudio">VisualStudio</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1901 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1900 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-26 09:33 -0700</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/833795cbdebf3feb78d37ac8b97cde8b83f8aff3" target="_blank" rel="noopener">833795c</a> @ 2020-09-20</p>
 			</footer>
@@ -293,7 +281,7 @@
 
 
 
-	<script src="https://corytodd.us/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	<script src="https://corytodd.us/js/bundle.min.7d8545daa55d62427355498dd8da13f98ff79a7938ce7d2a5e2ae1ec0de3beb8.js" integrity="sha256-fYVF2qVdYkJzVUmN2NoT+Y/3mnk4zn0qXirh7A3jvrg=" crossorigin="anonymous"></script>
 	
 <script type="application/javascript">
 var doNotTrack = false;

@@ -8,22 +8,16 @@
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Dirmon Utility">
-<meta itemprop="description" content="I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature.">
-<meta itemprop="datePublished" content="2020-05-01T15:02:59-07:00" />
+<meta itemprop="description" content="I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature."><meta itemprop="datePublished" content="2020-05-01T15:02:59-07:00" />
 <meta itemprop="dateModified" content="2020-05-02T16:04:35-07:00" />
-<meta itemprop="wordCount" content="886">
-<meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
-
-
-
-<meta itemprop="keywords" content="Windows," />
-<meta property="og:title" content="Dirmon Utility" />
+<meta itemprop="wordCount" content="884"><meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
+<meta itemprop="keywords" content="Windows," /><meta property="og:title" content="Dirmon Utility" />
 <meta property="og:description" content="I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://corytodd.us/posts/dirmon-utility/" />
-<meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/>
+<meta property="og:url" content="https://corytodd.us/posts/dirmon-utility/" /><meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-01T15:02:59-07:00" />
 <meta property="article:modified_time" content="2020-05-02T16:04:35-07:00" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://corytodd.us/img/coder_1.jpg"/>
 
@@ -123,7 +117,7 @@ own, specific solution. Right off the bat, I know the challenges are going to be
 <p>I decided to build my solution around the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.io.filesystemwatcher?view=netcore-3.1">FileSystemWatcher</a> API using dotnet core. Starting from the APIs sample implementation, getting a directory watcher up and running is trivial.</p>
 <h3 id="basic-approach">Basic Approach<a href="#basic-approach" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="c1">// Create a new FileSystemWatcher and set its properties.
-</span><span class="c1"></span><span class="n">_watcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileSystemWatcher</span>
+</span><span class="c1"></span><span class="m">_</span><span class="n">watcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileSystemWatcher</span>
 <span class="p">{</span>
     <span class="n">Path</span> <span class="p">=</span> <span class="n">MonitorDir</span><span class="p">,</span>
     <span class="c1">// Watch for changes in LastAccess and LastWrite times, and
@@ -136,19 +130,17 @@ own, specific solution. Right off the bat, I know the challenges are going to be
 <span class="p">};</span>
 
 <span class="c1">// Add event handlers.
-</span><span class="c1"></span><span class="n">_watcher</span><span class="p">.</span><span class="n">Changed</span> <span class="p">+=</span> <span class="n">OnChanged</span><span class="p">;</span>
-<span class="n">_watcher</span><span class="p">.</span><span class="n">Created</span> <span class="p">+=</span> <span class="n">OnCreated</span><span class="p">;</span>
-<span class="n">_watcher</span><span class="p">.</span><span class="n">Deleted</span> <span class="p">+=</span> <span class="n">OnDeleted</span><span class="p">;</span>
-<span class="n">_watcher</span><span class="p">.</span><span class="n">Renamed</span> <span class="p">+=</span> <span class="n">OnRenamed</span><span class="p">;</span>
-</code></pre></div>
+</span><span class="c1"></span><span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Changed</span> <span class="p">+=</span> <span class="n">OnChanged</span><span class="p">;</span>
+<span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Created</span> <span class="p">+=</span> <span class="n">OnCreated</span><span class="p">;</span>
+<span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Deleted</span> <span class="p">+=</span> <span class="n">OnDeleted</span><span class="p">;</span>
+<span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Renamed</span> <span class="p">+=</span> <span class="n">OnRenamed</span><span class="p">;</span></code></pre></div>
 <p>Since we care about the file contents more than anything else, <code>OnChanged</code> is the only handler that matters. The others will just log the event and immediately return.
 The naive approach:
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="n">OnCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">)</span>
     <span class="n">Logger</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&#34;Snapshot: {0}&gt; {1}&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></p>
+<span class="p">}</span></code></pre></div></p>
 <p>has a few problems. The most obvious being that ReadAllText does not open the file in shared mode. The may cause the creating process to error out if it is expecting
 to have exclusive access to the file. Instead, we will need to explicitly set the file sharing mode.
 <div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="n">OnCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
@@ -159,8 +151,7 @@ to have exclusive access to the file. Instead, we will need to explicitly set th
         <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
         <span class="n">Logger</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&#34;Snapshot: {0}&gt; {1}&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></p>
+<span class="p">}</span></code></pre></div></p>
 <p>This is better and prevents the issue of locking the file inadvertently. However, logging all of this to the console or to file gets out of hand very quickly. A better
 solution is to sequence each change and then write the results to a backup location. Dirmon uses what we call a shadow directory to receive these sequence change
 records. Since writing to disk can be slow, we delegate the task of actually writing the files to a background thread.</p>
@@ -183,26 +174,25 @@ records. Since writing to disk can be slow, we delegate the task of actually wri
             <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
 
             <span class="c1">// We have the contents, determine what change number this is
-</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(!</span><span class="n">_sequenceCache</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">seq</span><span class="p">))</span>
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(!</span><span class="m">_</span><span class="n">sequenceCache</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">seq</span><span class="p">))</span>
             <span class="p">{</span>
                 <span class="n">seq</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
             <span class="p">}</span>
 
-            <span class="n">_sequenceCache</span><span class="p">.</span><span class="n">TryAdd</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">seq</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+            <span class="m">_</span><span class="n">sequenceCache</span><span class="p">.</span><span class="n">TryAdd</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">seq</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
 
             <span class="c1">// Commit this snapshot
-</span><span class="c1"></span>            <span class="n">_memoryDb</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="k">new</span> <span class="n">FileSnapshot</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Path</span><span class="p">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">),</span> <span class="n">text</span><span class="p">));</span>
+</span><span class="c1"></span>            <span class="m">_</span><span class="n">memoryDb</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="k">new</span> <span class="n">FileSnapshot</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Path</span><span class="p">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">),</span> <span class="n">text</span><span class="p">));</span>
         <span class="p">}</span>
 
         <span class="c1">// Signal data ready
-</span><span class="c1"></span>        <span class="n">_memoryReady</span><span class="p">.</span><span class="n">Release</span><span class="p">();</span>
+</span><span class="c1"></span>        <span class="m">_</span><span class="n">memoryReady</span><span class="p">.</span><span class="n">Release</span><span class="p">();</span>
     <span class="p">}</span>
     <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">Logger</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="s">&#34;OnChangeFast Error ({0} {1})&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ChangeType</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></p>
+<span class="p">}</span></code></pre></div></p>
 <p>Some things to highlight:</p>
 <ul>
 <li>_memoryDb is a concurrent dictionary</li>
@@ -217,10 +207,10 @@ may miss certain events, especially in the case of malicious software. The full 
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><a href="https://docs.microsoft.com/en-us/sysinternals/">https://docs.microsoft.com/en-us/sysinternals/</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://docs.microsoft.com/en-us/sysinternals/">https://docs.microsoft.com/en-us/sysinternals/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p><a href="https://www.nirsoft.net/">https://www.nirsoft.net/</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://www.nirsoft.net/">https://www.nirsoft.net/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
@@ -231,7 +221,7 @@ may miss certain events, especially in the case of malicious software. The full 
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://corytodd.us/tags/windows">Windows</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>886 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>884 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-01 15:02 -0700</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/38158f6bbf89d3c6206f4ee457246fb3564143ef" target="_blank" rel="noopener">38158f6</a> @ 2020-05-02</p>
 			</footer>
@@ -257,7 +247,7 @@ may miss certain events, especially in the case of malicious software. The full 
 
 
 
-	<script src="https://corytodd.us/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	<script src="https://corytodd.us/js/bundle.min.7d8545daa55d62427355498dd8da13f98ff79a7938ce7d2a5e2ae1ec0de3beb8.js" integrity="sha256-fYVF2qVdYkJzVUmN2NoT+Y/3mnk4zn0qXirh7A3jvrg=" crossorigin="anonymous"></script>
 	
 <script type="application/javascript">
 var doNotTrack = false;
