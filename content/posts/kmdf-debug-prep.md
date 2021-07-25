@@ -65,9 +65,10 @@ In another post, I'll walk you through connecting with the debugger, loading sym
 
 ### Troubleshooting
 
-If during deployment you get an error complaining about a missing VC142 library you can run this command from an elevated console as a solution.
+If during deployment you get an error complaining about a missing VC142 library you can run this command from an elevated console as a solution. This must be run from an admin command prompt (not powershell).
 
 ```
 cd /d %VCToolsRedistDir%\debug_nonredist 
-MKLINK /J x86\Microsoft.VC141.DebugCRT x86\Microsoft.VC142.DebugCRT MKLINK /J x64\Microsoft.VC141.DebugCRT x64\Microsoft.VC142.DebugCRT
+MKLINK /J x86\Microsoft.VC141.DebugCRT x86\Microsoft.VC142.DebugCRT 
+MKLINK /J x64\Microsoft.VC141.DebugCRT x64\Microsoft.VC142.DebugCRT
 ```
