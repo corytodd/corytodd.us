@@ -1,5 +1,5 @@
 +++
-title = "Kmdf Debugger Connection"
+title = "KMDF Debugger Connection"
 date = 2021-07-25T08:31:32-07:00
 draft = false
 categories = ["Development"]
