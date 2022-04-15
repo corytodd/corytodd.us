@@ -1,4 +1,4 @@
 [submodule "public"]
-	path = public
-	url = https://github.com/corytodd/corytodd.us.git
-	branch = master
+    path = public
+    url = https://github.com/corytodd/corytodd.us.git
+    branch = main
