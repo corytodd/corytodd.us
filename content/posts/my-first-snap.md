@@ -22,17 +22,17 @@ chain of pipes, I chose to write my app. Since I use this application on multipl
 1. Install `snapd` using your preferred package manager (if not already installed)
 2. Install `snapcraft` using snap itself
 
-    $ sudo snap install snapcraft --classic
+    `$ sudo snap install snapcraft --classic`
 
 3. Write your code to do its thing (mask in this case)
 4. Define your snap file in YAML
 5. Build your snap 
 
-    snapcraft
+    `snapcraft`
     
 6. Install and test your snap
 
-    $ sudo snap install --devmode path/to/your_package.snap
+    `$ sudo snap install --devmode path/to/your_package.snap`
     
 
 ## CMake specifics
