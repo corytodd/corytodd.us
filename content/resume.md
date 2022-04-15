@@ -5,7 +5,12 @@ date = "2020-04-24"
   name = "Cory Todd"
 +++
 
-10 years of successful software development and innovation. I have extensive experience in the complete development cycle of both hardware and software products. Team collaboration and mentorship are hallmarks of my work.
+Current Senior Software Engineer at Pyramid Technologies with 10 years of experience specializing
+in the development of high-availability embedded devices, automated tooling, and performance optimization.
+I have production experience in designing and deploying modern machine learning and artificial intelligence solutions.
+My goal is to help teams produce great products by contributing my experience, willingness to learn and share, and by always trying
+to do the right thing. I love learning new programming languages and technologies, deep-diving into zero-day exploits,
+and finding new ways to be productive. My hobbies include geeking out with baking science, mountain biking, and keeping my 3D printer running.
 
 ### Experience
 **[Pyramid Technologies](https://pyramidacceptors.com/), Mesa, AZ — Senior Software Engineer** |
