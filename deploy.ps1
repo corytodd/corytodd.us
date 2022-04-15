@@ -1,5 +1,5 @@
 param (
-    [string] $message = "site rebuild" + (Get-Date -UFormat "%A %m/%d/%Y %R %Z")
+    [string] $message = "site rebuild " + (Get-Date -UFormat "%A %m/%d/%Y %R %Z")
 )
 
 Write-Host "Deploying updates to Github"
