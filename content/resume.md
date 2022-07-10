@@ -1,6 +1,6 @@
 +++
 title = "Resume"
-date = "2020-04-24"
+date = "2022-07-10"
 [ author ]
   name = "Cory Todd"
 +++
