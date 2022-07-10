@@ -14,6 +14,7 @@ and finding new ways to be productive. My hobbies include geeking out with bakin
 
 ### Experience
 **[Canonical](https://canonical.com/), Los Angeles, CA - Linux Kernel Engineer** |
+_july 2022 - Present_
 
 * Responsible for maintaining a variety of kernel flavors
 
