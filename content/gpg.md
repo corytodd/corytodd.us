@@ -1,23 +1,20 @@
 +++
 title = "GPG Keys"
-date = "2020-04-25"
+date = "2022-07-20"
 data_file = "gpg_partial.html"
 [ author ]
   name = "Cory Todd"
 +++
 
-How to get the GPG key for cory@ardonyx.io using wkd.
-
-{{< highlight bash >}}
-gpg --auto-key-locate wkd --locate-keys cory@ardonyx.io
-    pub   rsa4096 2020-05-02 [SC] [expires: 2022-05-02]
-          E85D5CFEB4C400A1D00F785BCC7DD82BCAA0A112
-    uid           [ultimate] Cory Todd <cory@ardonyx.io>
-    sub   rsa4096 2020-05-02 [E] [expires: 2022-05-02]
-{{< /highlight >}}
-
 {{< highlight bash >}}
 -----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: User-ID:   Cory Todd <cory@ardonyx.io>
+Comment: Created:   5/2/2020 12:07 PM
+Comment: Expires:   3/22/2023 11:59 PM
+Comment: Type:  4,096-bit RSA (secret key available)
+Comment: Usage: Signing, Certifying User-IDs
+Comment: Fingerprint:   E85D5CFEB4C400A1D00F785BCC7DD82BCAA0A112
+
 
 mQINBF6txN4BEADGhI9ORhuJGxOauTLznUC0Vimcv0ooxkDbY+wbIC+QVoe1IV0G
 a37iwdYKY4n1m/uiqndo4XdzAEue7DzEjHKQX64A80wTj1lvo/ofX5ai86EQ/bUr
@@ -30,20 +27,20 @@ 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
-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
+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
@@ -67,6 +64,6 @@ Ai6caXfZ4wc06iUaQJkBvrA3nGqsIoR1ovtDd6nw8g8OmKSrKDmNSDQZ5eR6M35H
 Gaoy9RORRFO97YxMP/h4jWkjNIptmW8YmJSdqX21XsAZqzHzGHSk0ohlM6WR5Pa/
 DpgPnXqp/qKq4A9LdWR44PV6UIq/LBCaMRMReg9DngeFJb3pnvidR6VBDPsoccs6
 z7xJ
-=szrw
+=ELh7
 -----END PGP PUBLIC KEY BLOCK-----
 {{< /highlight >}}

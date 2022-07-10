@@ -5,7 +5,7 @@ date = "2020-04-24"
   name = "Cory Todd"
 +++
 
-Current Senior Software Engineer at Pyramid Technologies with 10 years of experience specializing
+Current Linux Kernel Engineer at Canonical with 10 years of experience specializing
 in the development of high-availability embedded devices, automated tooling, and performance optimization.
 I have production experience in designing and deploying modern machine learning and artificial intelligence solutions.
 My goal is to help teams produce great products by contributing my experience, willingness to learn and share, and by always trying
@@ -13,8 +13,12 @@ to do the right thing. I love learning new programming languages and technologie
 and finding new ways to be productive. My hobbies include geeking out with baking science, mountain biking, and keeping my 3D printer running.
 
 ### Experience
+**[Canonical](https://canonical.com/), Los Angeles, CA - Linux Kernel Engineer** |
+
+* Responsible for maintaining a variety of kernel flavors
+
 **[Pyramid Technologies](https://pyramidacceptors.com/), Mesa, AZ — Senior Software Engineer** |
-_July 2017  - Present_
+_July 2017  - July 2022_
 
 * Lead developer on counterfeit currency detection algorithms
 * Extensive custom USB development

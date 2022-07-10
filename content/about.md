@@ -19,7 +19,7 @@ He specializes in the following topics:
 
 Future research projects include:
 
-* Windows kernel security
+* Linux kernel security
 * Reverse engineering (and defense)
 * Bringing high-level tools to the embedded space
 
