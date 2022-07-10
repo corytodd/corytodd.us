@@ -1,0 +1,760 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Posts on Cory Todd</title>
+		<link>https://corytodd.us/posts/</link>
+		<description>Recent content in Posts on Cory Todd</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+		<lastBuildDate>Fri, 15 Apr 2022 11:41:42 -0700</lastBuildDate>
+		<atom:link href="https://corytodd.us/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>My First Snap</title>
+			<link>https://corytodd.us/posts/my-first-snap/</link>
+			<pubDate>Fri, 15 Apr 2022 11:41:42 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/my-first-snap/</guid>
+			<description>Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time? Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service.</description>
+			<content type="html"><![CDATA[<p>Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time?
+Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology
+to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service. In a nutshell, snaps provide a sandboxed
+environment in which developers can bundle their apps including all their weird dependencies. Developers win by eliminating the friction of complicated setups. Users win by being
+able to run more applications more easily and more securely, at least in theory. We&rsquo;ll test both sides of the experience in this article.</p>
+<h2 id="the-binary">The Binary</h2>
+<p>I needed a simple application to quickly perform trivial transforms on data like XOR, hex encoding, and binary encoding in a specific output format. Instead of making a complicated
+chain of pipes, I chose to write my app. Since I use this application on multiple lab and VM machines I thought it would be cool to have it available as a snap.</p>
+<h2 id="the-process">The process</h2>
+<ol>
+<li>
+<p>Install <code>snapd</code> using your preferred package manager (if not already installed)</p>
+</li>
+<li>
+<p>Install <code>snapcraft</code> using snap itself</p>
+<p><code>$ sudo snap install snapcraft --classic</code></p>
+</li>
+<li>
+<p>Write your code to do its thing (mask in this case)</p>
+</li>
+<li>
+<p>Define your snap file in YAML</p>
+</li>
+<li>
+<p>Build your snap</p>
+<p><code>snapcraft</code></p>
+</li>
+<li>
+<p>Install and test your snap</p>
+<p><code>$ sudo snap install --devmode path/to/your_package.snap</code></p>
+</li>
+</ol>
+<h2 id="cmake-specifics">CMake specifics</h2>
+<p>The snap system uses what are called plugins which serve as the driver for building your code. I am most interested in CMake so we&rsquo;ll be going over its specifics.</p>
+<p>Regardless of your plugin, you need this metadata stanza to describe your package:</p>
+<pre><code>name: mask
+base: core20
+version: '0.1'
+summary: The binary masking tool
+description: |
+This tool provides basic binary operations like XOR and HEX on string
+or stdin inputs. Nothing special, just wanted to write a snap.
+</code></pre>
+<p>During development, you can set these values to allow unrestricted access to the system. You&rsquo;ll need to tighten this up before publishing.</p>
+<pre><code>grade: devel
+confinement: devmode
+</code></pre>
+<p>This section is what exposes features in your package. In this case, we have our binary compiled and installed to <code>/usr/bin</code> within our sandbox. Note that our
+package name is <code>mask</code> which matches the command <code>mask</code>. Snaps are called using <code>package name</code>.<code>command</code> name syntax but if the package name and command are
+the same it will be simplified, in this case to <code>mask</code>. Also not the lack of leading forward slash on the command.</p>
+<pre><code>apps:
+  mask:
+    command: usr/bin/mask
+</code></pre>
+<p>Now for the CMake specific stuff! Here we&rsquo;re telling snapcraft to use the CMake builder, specifying that our CMakeList.txt file is in the current directory (.),
+and to place our install under <code>/usr</code>. Finally, our program requires g++ to compile so we will include that in our build packages list. If you are writing a
+C application then you would use GCC or whatever C compiler you need. We don&rsquo;t have any other dependencies so this is a brief list.</p>
+<pre><code>parts:
+  cmake-build:
+    plugin: cmake
+    cmake-parameters:
+            - -DCMAKE_INSTALL_PREFIX=/usr
+    source: .
+    build-packages:
+            - g++
+</code></pre>
+<p>The CMake builder plugin issues an install command so your CMakeList.txt file must define an install directive. We achieve this with</p>
+<pre><code>install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+</code></pre>
+<h2 id="final-verdict">Final Verdict</h2>
+<p>The whole process took about 20 minutes which is in line with the suggested time on the snapcraft IO tutorial site. Overall, the docs were sufficient and I did not
+have much trouble after switching to my Fedora box. My first attempt was on WSL which kinda-sorta worked but <code>snapd</code> kept crashing. The CMake-specific stuff took a
+few minutes to figure out. Specifically, the compiler had to be listed in the build-package section. The reasoning makes sense now that I&rsquo;m familiar with the
+process. Also, the explicit CMake install directive was missing in my first iteration but since I know CMake, this wasn&rsquo;t an issue. A developer less experienced with
+CMake may have gotten stuck here. I think the CMake plugin should throw an error if there is no install target defined in the CMakeList.txt.</p>
+<p>Snaps deliver on its promise and I&rsquo;d love to see the technology ported to Windows.</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>KMDF Debugger Connection</title>
+			<link>https://corytodd.us/posts/kmdf-debug-connect/</link>
+			<pubDate>Sun, 25 Jul 2021 08:31:32 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/kmdf-debug-connect/</guid>
+			<description>In my previous post we covered the setup and deployment of a Windows driver to a virtual machine target. This post will walk you through the process of connecting WinDBG to the target to explore and step through the driver. By the end of this article, you will have symbols, breakpoints, WPP, and kdprint up and running.
+Requirements  WinDbg x64 (or the new preview version) TraceView from WDK  Driver Modification We&amp;rsquo;re going to start by modifying the driver to use KdPrint to show some debug information.</description>
+			<content type="html"><![CDATA[<p>In my <a href="https://corytodd.us/posts/kmdf-debug-prep/" title="previous post">previous post</a> we covered the setup and deployment of a Windows driver to a virtual machine target. This post will walk you through the process of connecting WinDBG to the target to explore and step through the driver. By the end of this article, you will have symbols, breakpoints, WPP, and kdprint up and running.</p>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>WinDbg x64 (or the new preview version)</li>
+<li>TraceView from WDK</li>
+</ul>
+<h3 id="driver-modification">Driver Modification</h3>
+<p>We&rsquo;re going to start by modifying the driver to use KdPrint to show some debug information. WPP is very powerful but sometimes you just want to print messages to your debugger and KdPrint can do just that <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-kdprint#remarks">with certain limitations</a>. Go ahead and add a line of code inside <code>DriverEntry</code>, something along the lines</p>
+<pre><code>KdPrint((&quot;Hello DriverEntry: 0x%p&quot;, DriverObject));
+</code></pre>
+<p>This will show a string message and the address of our <code>DriverObject</code> handle formatted as a pointer. Rebuild and deploy your driver with this change in place.</p>
+<h3 id="debugger-setup">Debugger Setup</h3>
+<p>The first step in debugging is to connect to the target. Since you&rsquo;re using visual studio, it may be tempting to try and debug from within Visual Studio. I have had mixed results getting this to work reliably but more importantly, WinDbg is more or less tooled specifically for driver development. We&rsquo;ll use the right tool for the job.</p>
+<p>If you have not already done so, open WinDbg. We will need to get the port and connection key from Visual Studio before we can make WinDbg connect to the target. The port and key can be found on the page where you configured the debug target. The default port is something near 50000 and the key is a 48 character string split into 4 sets of 12 characters. These values will need to be placed in a connection string that WinDbg can use.</p>
+<p>Here is a sample connection string. The server field is the hostname of your target. The port and password may be different in your environment. I recommend copying this string to notepad and editing it there.</p>
+<pre><code>tcp:server=WINDEV2106EVAL,port=50431,password=AAAAAAAAAAAA.BBBBBBBBBBBB.CCCCCCCCCCCC.DDDDDDDDDDDD
+</code></pre>
+<p>Once you have built your connection string, go to WinDbg and go to File-&gt;Connect to the remote debugger (or CTRL+R). Paste in your connection string and click Ok. The debugger should connect and pause the target OS. This means you are connected and ready to debug!</p>
+<p>The first order of business is to make KdPrint and friends work correctly. By default, kernel-debug print statements are not emitted from the target. You can change this by modifying the print mask variable <code>kd_DEFAULT_MASK</code> using the WinDbg command prompt.</p>
+<pre><code>ed kd_DEFAULT_MASK 0xf
+</code></pre>
+<p>Next, you will want to set up your symbol path so breakpoints will work. This is done by using the <code>.sympath+</code> command as follows:</p>
+<pre><code>.sympath+ H:\path\to\your\project\root
+</code></pre>
+<p>The path should be the folder containing the root of your driver project which typically contains the vcproj file. From here, WinDbg will automatically locate debug symbols and source code to aid in the debugging process. You will also need to force WinDbg to reload symbols which will take some time.</p>
+<pre><code>.reload /f
+</code></pre>
+<p>Take a break and let this process run its course.</p>
+<h3 id="kdprint">KdPrint</h3>
+<p>By now all of your symbols should be reloaded. Finally, we can get to some actual debugging!. Let&rsquo;s set a breakpoint using the WinDbg command window. You need to know two pieces of information to set your breakpoint. The module name and the function/line to break on. Your module name by default is the project name without spaces. I named my project <code>vhid2</code> and I want to break at the driver&rsquo;s entry point so I&rsquo;ll enter the following:</p>
+<pre><code>bm vhid2!DriverEntry
+</code></pre>
+<p>Once this breakpoint is set, you should be able to see KdPrint statements in the command window. The easiest way to see our message is to force <code>DriverEntry</code> to run. You can do this by disabled and enabling the driver from the Device Manager. If everything is correct, you should see &ldquo;Hello DriverEntry: 0xFFFFC2056703EE30&rdquo; in the command window (your address will be different). Go ahead type <code>g</code> or Go in your debugger to continue from the breakpoint. We will want to detach the debugger so the target VM doesn&rsquo;t stay in a breakpoint state. Use the detach command to release the debugger.</p>
+<h3 id="wpp-tracings">WPP Tracings</h3>
+<p>That&rsquo;s not the only way to view logging information. WPP is the super-fast trace logging utility that supports a more powerful log filtering system. The project template we used already has WPP configured along with some sample trace statements. No changes are needed to your project to make them work. You will however need a copy of the <code>traceview</code> utility which can be found at</p>
+<pre><code>C:\Program Files (x86)\Windows Kits\10\Tools\x64\traceview.exe
+</code></pre>
+<p>Copy this file to your target VM. You will also need to copy over the PDB for your driver which should be located in the Debug folder of your project&rsquo;s root directory. My PDB is called vhid2.pdb. From your target VM, run <code>traceview</code> as administrator and click File-&gt;Create New Log Session. Select the PDB option and chose the PDB file you just copied over then click Okay-&gt;Next-&gt;Finish, accept all defaults along the way. You can get fancy and make a VM mount point that references your build directory but I&rsquo;ll leave that as an exercise to the reader.</p>
+<p>Use the same trick to force <code>DriverEntry</code> to run again and you will see your WPP trace statements appear in TraceView.</p>
+<h3 id="summary">Summary</h3>
+<p>In this post we walked through the process of connecting a kernel debugger, enabling KdPrint, and viewing WPP trace messages. With all that out of the way, you can start learning how to develop Windows drivers. Good luck!</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>KMDF Debugger Preparation</title>
+			<link>https://corytodd.us/posts/kmdf-debug-prep/</link>
+			<pubDate>Sat, 24 Jul 2021 09:58:23 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/kmdf-debug-prep/</guid>
+			<description>Developing drivers for Windows is enjoyable but getting up and running takes some time. Today we&amp;rsquo;ll be walking through the steps required to get a minimal debugger setup. In this post, we&amp;rsquo;ll be preparing for a fully function kernel mode debugger configuration. That includes getting all the tools installed, VMs provisioned, and a driver deployed.
+Environment  Host  Windows 10 x64 20H2 Visual Studio Community 2019 16.10.4 Windows Driver Kit Spectre Mitigated Libraries VMWare Workstation 16.</description>
+			<content type="html"><![CDATA[<p>Developing drivers for Windows is enjoyable but getting up and running takes some time. Today we&rsquo;ll be walking through the steps required to get a minimal debugger setup. In this post, we&rsquo;ll be preparing for a fully function kernel mode debugger configuration. That includes getting all the tools installed, VMs provisioned, and a driver deployed.</p>
+<h3 id="environment">Environment</h3>
+<ul>
+<li>Host
+<ul>
+<li>Windows 10 x64 20H2</li>
+<li>Visual Studio Community 2019 16.10.4</li>
+<li>Windows Driver Kit</li>
+<li>Spectre Mitigated Libraries</li>
+<li>VMWare Workstation 16.0</li>
+</ul>
+</li>
+<li>Target
+<ul>
+<li><a href="https://developer.microsoft.com/en-us/windows/downloads/virtual-machines/">WinDev2106Eval.VMware.zip</a></li>
+<li>Host-Only Networking</li>
+</ul>
+</li>
+</ul>
+<h2 id="host-setup-part-1">Host Setup Part 1</h2>
+<p>After you install Visual Studio 2019, navigate to <code>Tools-&gt;Get Tools and Features</code> to install some additional components. Select the individual components tabs and search for <code>spectre latest x64</code> then check the box next to <code>MSVC vXXX - VS2019 C++ x64/x86 Spectre-mitigated libs (Latest)</code> where XXX will be the toolchain version. Next, search for <code>driver kit</code> then check the box next to <code>Windows Driver Kit</code>. On the bottom right, click Modify and wait for the process to complete.</p>
+<p>Create a new project using one of the KMDF project templates available in Visual Studio. I chose Kernel Mode Driver (KMDF) for this walk-through. Wait for the project to load then switch the solution platform to x64 and try to build the project. If your environment is correct, the project should build without any errors or warnings. You may see some Intellisense errors about not being able to find some .tmh files. Don&rsquo;t worry about those for now.</p>
+<h2 id="guest-setup">Guest Setup</h2>
+<p>Once you have downloaded the VMWare Windows 10 development image from Microsoft, import the OVA into VMWare Workstation. If your host can spare the resources, consider increasing your guest RAM to 4GB and your processor core count to 2 for a better debugging experience.</p>
+<p>VMWare will boot your Windows 10 image and log in to the desktop. The next step is to install the WDK Test Target package which can be found on your host system as  <code>C:\Program Files (x86)\Windows Kits\10\Remote\x64\WDK Test Target Setup x64-x64_en-us.msi</code>. Copy this file to your guest VM then run it.</p>
+<p>Next, you will need to determine your networking information. Ensure that your VM is using a Host-Only network the grab your IP address. The default network should be in the <code>192.168.x.y</code> range. This information is needed to determine your host address which will be <code>192.168.x.1</code> where <code>x</code> is the second to last octet in your VM&rsquo;s IP address. Write this down for later.</p>
+<p>Finally, you will need to know the VM&rsquo;s hostname. The default hostname as of writing this post is <code>WINDEV2106EVAL</code> but be sure to confirm before proceeding.</p>
+<p><em>Make a VM snapshot before continuing!</em></p>
+<h2 id="host-setup-part-2">Host Setup Part 2</h2>
+<p>Now that you have prepared the guest VM, we can continue configuring the debugger. Start by adding a new debugging target in Visual Studio. This can be done in several ways, one of which is to navigate to <code>Project Properties-&gt;Debugging</code> then select <code>Remote Computer Name</code>. Select <code>&lt;Configure&gt;</code> from the drop-down menu to launch the Configure Devices tool.</p>
+<ol>
+<li>Click Add New Device</li>
+<li>Name your device. e.g. Win 10 2106 VM</li>
+<li>Set the hostname. e.g. WINDEV2106EVAL</li>
+<li>Select Provision device and choose debugger settings</li>
+<li>Click Next</li>
+<li>Ensure Network is selected for Connection Type</li>
+<li>Change Host IP to <code>192.168.x.1</code> from the previous section</li>
+<li>Click Next</li>
+<li>Wait&hellip; some&hellip; time&hellip;</li>
+<li>Finish</li>
+</ol>
+<p>The guest is now ready to be debugged. Consider taking a snapshot of the VM before moving on to the next section.</p>
+<h2 id="deployment">Deployment</h2>
+<p>So far we have created a Visual Studio environment that supports driver development and we&rsquo;ve prepared a debuggable virtual machine hosted on VMWare Workstation. The last step is to deploy your driver and observe it populated in the target&rsquo;s device manager. From your project&rsquo;s property page, select <code>Driver-Install-&gt; Deployment</code> and pick your target VM from the drop-down menu. Select <code>Install/Reinstall and Verify</code> then click Apply.</p>
+<p>Deploy the driver by right-clicking on the project and selecting Deploy. This process may take a couple of minutes to complete. If the deployment succeeds, you will see your device in the target&rsquo;s device manager.</p>
+<p>In another post, I&rsquo;ll walk you through connecting with the debugger, loading symbols, and setting a breakpoint.</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If during deployment you get an error complaining about a missing VC142 library you can run this command from an elevated console as a solution. This must be run from an admin command prompt (not powershell).</p>
+<pre tabindex="0"><code>cd /d %VCToolsRedistDir%\debug_nonredist 
+MKLINK /J x86\Microsoft.VC141.DebugCRT x86\Microsoft.VC142.DebugCRT 
+MKLINK /J x64\Microsoft.VC141.DebugCRT x64\Microsoft.VC142.DebugCRT
+</code></pre>]]></content>
+		</item>
+		
+		<item>
+			<title>Visual Studio and The Mysterious Additional Includes</title>
+			<link>https://corytodd.us/posts/vs-mystery-includes/</link>
+			<pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/vs-mystery-includes/</guid>
+			<description>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about where your tools or how to get to them. If you&amp;rsquo;re building strictly for Windows, you don&amp;rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms of surprise and foot-guns.</description>
+			<content type="html"><![CDATA[<p>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about
+where your tools or how to get to them. If you&rsquo;re building strictly for Windows, you don&rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms
+of surprise and foot-guns.</p>
+<p>Of course, all magic has a perfectly valid explanation. One such explanation is the global build props feature which has an interesting
+and terrifying ability to modify all (new) projects you create with Visual Studio. Years ago I installed a particular tool to help me
+isolate a particularly nasty GDI resource leak<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The tool didn&rsquo;t work but I did find my leak! Of course, it was an HICON and yes, I
+did feel foolish. Anyways, I removed the not-quite-useful leak detector and went on with my life. When I went to create a new project,
+I noticed that there was an additional library that includes paths in the project. Paths that I didn&rsquo;t need and certainly didn&rsquo;t want. They
+were pointing to the library path for the leak detector! How on earth could this happen? I figured the un-install went pear-shaped but
+all signs indicated that it was removed. No sign of it in the registry, program files, or even my AppData folder. Since no actual libraries were getting linked I ignored the problem and went on with my life. Just a minor annoyance.</p>
+<p>Well, a few years go by and I eventually upgrade my hardware and install Windows after a bad experience with the Win 10 insiders program.
+Once the dust settled, I got back to work writing some code and was utterly shocked that the mysterious link references were still getting
+injected into my new projects! Except for my home directory, this was an entirely fresh installation.</p>
+<p>After some research, I learned about global build props. There is a folder</p>
+<pre><code>%AppData%\Local\Microsoft\MSBuild\v4.0\
+</code></pre>
+<p>that holds a smattering of files that can be written in such a way that VS will use them for certain defaults. The docs are not shy about
+saying these are a bad idea<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Before the days of version control and distributed projects, this was probably a very useful
+feature. The replacement technology, Props Sheets, is superior in just about every way so I don&rsquo;t see any reason to return to the old ways.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code">https://docs.microsoft.com/en-us/archive/msdn-magazine/2001/march/resource-leaks-detecting-locating-and-repairing-your-leaky-gdi-code</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019">https://docs.microsoft.com/en-us/cpp/build/create-reusable-property-configurations?view=vs-2019</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Git Merge Alias</title>
+			<link>https://corytodd.us/posts/git-sync/</link>
+			<pubDate>Sun, 28 Jun 2020 09:31:42 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/git-sync/</guid>
+			<description>I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern, maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&amp;rsquo;ll work well together. One feature that&amp;rsquo;s common across all branching models is the need for your target branches in sync. For example, with git-flow you cannot finish a feature if your local develop is behind origin develop.</description>
+			<content type="html"><![CDATA[<p>I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern,
+maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&rsquo;ll
+work well together. One feature that&rsquo;s common across all branching models is the need for your target branches in sync. For example,
+with git-flow you cannot finish a feature if your local develop is behind origin develop. The solution is simple enough</p>
+<pre><code>git fetch origin develop:develop
+</code></pre>
+<p>This says to update (or create) your local develop branch based on the latest develop branch on origin<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. This is equivalent to</p>
+<pre><code>git checkout develop
+git fetch
+git pull
+</code></pre>
+<p>Note that the equivalence is only valid if your merge can be fast-forwarded. If you made the mistake of making local develop changes
+that now conflict with origin, you are on your own.</p>
+<p>Well, the odds of remembering that and <em>not</em> having to search Stack Overflow again are slim. Instead, we can make an alias to make this
+a little easier to remember. These two aliases can be added to your git config to enable syncing on a specified branch or a hardcoded
+branch. Your choice.</p>
+<pre><code>[alias]
+    sync = &quot;!f(){ git fetch origin ${1}:${1}; };f&quot;
+    synca = &quot;!f(){ git fetch origin develop:develop &amp;&amp; git fetch origin master:master; };f&quot;
+</code></pre>
+<p>The ${1} takes the first argument following your alias command.</p>
+<pre><code>git synca        // fetch and sync both develop and master branches without disturbing your current branch
+git sync develop // fetch and pull just develop without disturbing your current branch
+</code></pre>
+<p>That&rsquo;s all for today!</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://git-scm.com/docs/git-fetch#_examples">https://git-scm.com/docs/git-fetch#_examples</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Large Address Aware</title>
+			<link>https://corytodd.us/posts/large-address-aware/</link>
+			<pubDate>Fri, 26 Jun 2020 07:12:47 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/large-address-aware/</guid>
+			<description>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&amp;rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to.</description>
+			<content type="html"><![CDATA[<p>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to. LAA does not make any sense for a Dll since it is up to the executable to provide the address space.</p>
+<p>The day finally came where we needed to use some C++17 features on MSVC which required VS 15.7. Since we use CMake, this process is mostly transparent and our quirks
+files take care of the oddities on each compiler. What we were not prepared for was the new option <code>LARGEADDRESSAWARE:ON</code> to be the default. Furthermore, you can&rsquo;t
+set it to off because then compiler yells at you - &ldquo;Dlls don&rsquo;t support this feature&rdquo;. Well yeah, then why is it default to on for a dynamic library?! Disabling the option at compile time is not possible which means we need to add an extra step our post process. Not a huge deal, we have the pipeline ready to go.</p>
+<p>The solution depends on <code>editbin</code> which is part of the Windows SDK. You can find this on your developer command prompt or just peek in your VS install directory
+under <code>VC/Tools/MSVC/&lt;version&gt;/bin/&lt;host&gt;</code>.</p>
+<pre><code>editbin /NOLOGO /LARGEADDRESSAWARE:NO libfoo.dll
+
+libfoo.dll : warning LNK4259: '/LARGEADDRESS:NO' is not compatible with '/HIGHENTROPYVA'; image may not run
+</code></pre>
+<p>Those warnings at the end are interesting. Apparently, the high entropy virtual address flag is set as well. Fortunately, we
+can clear that directly in the CMake file.</p>
+<pre><code>if(MSVC)
+    set(CMAKE_EXE_LINKER_FLAGS &quot;${CMAKE_EXE_LINKER_FLAGS} /HIGHENTROPYVA:NO&quot;)
+    set(CMAKE_SHARED_LINKER_FLAGS &quot;${CMAKE_SHARED_LINKER_FLAGS} /HIGHENTROPYVA:NO&quot;)
+endif(MSVC)
+</code></pre>
+<p>which enables the post process to finish without any warnings.</p>
+<pre><code>editbin /NOLOGO /LARGEADDRESSAWARE:NO libfoo.dll
+</code></pre>
+<p>With these new features on the build system, we&rsquo;re back in business.</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Dirmon Utility</title>
+			<link>https://corytodd.us/posts/dirmon-utility/</link>
+			<pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/dirmon-utility/</guid>
+			<description>I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&amp;rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature.</description>
+			<content type="html"><![CDATA[<p>I like to learn how programs work. Sometimes that means watching the installation process using several tools
+from Sysinternals<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> or Nirsoft<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. For today&rsquo;s program of interest, I noticed a large number of files being
+written to the ProgramDirectory for this application. I found this a little suspicious since temporary and
+config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk
+long enough for me to see their names but I saw them flash in the file explorer which was enough to make me
+curious about their nature.</p>
+<h2 id="procmon">Procmon</h2>
+<p>My first step in the analysis is to just sit and watch. Sysinternals provides a tremendous amount of tools that address these
+types of tasks. In this case, I chose <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procmon">Procmon</a> to see exactly what files were getting created and deleted. The first step is
+to set up some filters to focus on the target process and the actions that we suspect are happening. Start simple and add
+more filters so you don&rsquo;t accidentally over-filter the results. This also helps you learn what operations and activities
+can be used in your filter. For example, unless I&rsquo;m inspecting the registry activity, I will exclude all registry activity
+in my filter to avoid the excessive noise.</p>
+<ul>
+<li>Process Name : Limit monitoring to actions performed by only this process</li>
+<li>Operation : Only log operations that are of this type</li>
+</ul>
+<p><img src="/img/procmon_filter.jpg" alt="Filter"></p>
+<p>With the filter in place, launching my application triggered several results. I could see about 5 different files being,
+written, then finally deleted all within a few milliseconds.</p>
+<h2 id="file-spy">File Spy</h2>
+<p>Sysmon is the tool of choice for this type of problem because it has options <em>specifically</em> for capturing file content as
+data comes and goes. However, to fully appreciate the value of this tool I thought it would be a good exercise to develop my
+own, specific solution. Right off the bat, I know the challenges are going to be:</p>
+<ol>
+<li>Getting correct file read access</li>
+<li>Reading the file before it gets deleted</li>
+<li>Not affecting the target process.</li>
+</ol>
+<p>I decided to build my solution around the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.io.filesystemwatcher?view=netcore-3.1">FileSystemWatcher</a> API using dotnet core. Starting from the APIs sample implementation, getting a directory watcher up and running is trivial.</p>
+<h3 id="basic-approach">Basic Approach</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="c1">// Create a new FileSystemWatcher and set its properties.</span>
+</span></span><span class="line"><span class="cl"><span class="m">_</span><span class="n">watcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileSystemWatcher</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Path</span> <span class="p">=</span> <span class="n">MonitorDir</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Watch for changes in LastAccess and LastWrite times, and</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// the renaming of files or directories.</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NotifyFilter</span> <span class="p">=</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">LastAccess</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">|</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">LastWrite</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">|</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">FileName</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">|</span> <span class="n">NotifyFilters</span><span class="p">.</span><span class="n">DirectoryName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Filter</span> <span class="p">=</span> <span class="n">pattern</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Add event handlers.</span>
+</span></span><span class="line"><span class="cl"><span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Changed</span> <span class="p">+=</span> <span class="n">OnChanged</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Created</span> <span class="p">+=</span> <span class="n">OnCreated</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Deleted</span> <span class="p">+=</span> <span class="n">OnDeleted</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="m">_</span><span class="n">watcher</span><span class="p">.</span><span class="n">Renamed</span> <span class="p">+=</span> <span class="n">OnRenamed</span><span class="p">;</span></span></span></code></pre></div>
+<p>Since we care about the file contents more than anything else, <code>OnChanged</code> is the only handler that matters. The others will just log the event and immediately return.
+The naive approach:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="n">OnCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Logger</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&#34;Snapshot: {0}&gt; {1}&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></p>
+<p>has a few problems. The most obvious being that ReadAllText does not open the file in shared mode. The may cause the creating process to error out if it is expecting
+to have exclusive access to the file. Instead, we will need to explicitly set the file sharing mode.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="n">OnCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileStream</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sr</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamReader</span><span class="p">(</span><span class="n">fs</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Logger</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&#34;Snapshot: {0}&gt; {1}&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></p>
+<p>This is better and prevents the issue of locking the file inadvertently. However, logging all of this to the console or to file gets out of hand very quickly. A better
+solution is to sequence each change and then write the results to a backup location. Dirmon uses what we call a shadow directory to receive these sequence change
+records. Since writing to disk can be slow, we delegate the task of actually writing the files to a background thread.</p>
+<h3 id="refined-approach">Refined Approach</h3>
+<p>Here we create a second method called <code>OnChangeFast</code> to handle this specific design.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">private</span> <span class="k">void</span> <span class="n">OnChangeFast</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">FileSystemEventArgs</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// We only care about change to non-directories</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">ChangeType</span> <span class="p">!=</span> <span class="n">WatcherChangeTypes</span><span class="p">.</span><span class="n">Changed</span> <span class="p">||</span> <span class="n">IsDirectory</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Attempt to capture contents without locking the file</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FileStream</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">sr</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamReader</span><span class="p">(</span><span class="n">fs</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">text</span> <span class="p">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// We have the contents, determine what change number this is</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(!</span><span class="m">_</span><span class="n">sequenceCache</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">seq</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">seq</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="m">_</span><span class="n">sequenceCache</span><span class="p">.</span><span class="n">TryAdd</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">seq</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// Commit this snapshot</span>
+</span></span><span class="line"><span class="cl">            <span class="m">_</span><span class="n">memoryDb</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="k">new</span> <span class="n">FileSnapshot</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Path</span><span class="p">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">),</span> <span class="n">text</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Signal data ready</span>
+</span></span><span class="line"><span class="cl">        <span class="m">_</span><span class="n">memoryReady</span><span class="p">.</span><span class="n">Release</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Logger</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="s">&#34;OnChangeFast Error ({0} {1})&#34;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ChangeType</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></p>
+<p>Some things to highlight:</p>
+<ul>
+<li>_memoryDb is a concurrent dictionary</li>
+<li>_memoryReady is a SemaphoreSlim that is incremented every time a snapshot is added to _memoryDb</li>
+<li>_sequenceCache holds a running counter for each file name. Since a directory cannot hold more than one file with the same this is sufficient.</li>
+</ul>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>Having made my rudimentary solution I have a better understanding of the problems that Sysmon can solve. The latter is designed for reliable,
+high-performance analysis, even for kernel-mode processes. My solution, while fun, is not sufficient in terms of robustness or reliability and
+may miss certain events, especially in the case of malicious software. The full source code for Dirmon can be found on my <a href="https://github.com/ardonyx/dirmon">Github</a>.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://docs.microsoft.com/en-us/sysinternals/">https://docs.microsoft.com/en-us/sysinternals/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://www.nirsoft.net/">https://www.nirsoft.net/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Civ V : Bad Religion</title>
+			<link>https://corytodd.us/posts/civ-v-bad-religion/</link>
+			<pubDate>Sun, 26 Apr 2020 09:33:09 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/civ-v-bad-religion/</guid>
+			<description>I have a bit of a problem with Civ V   Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable.</description>
+			<content type="html"><![CDATA[<figure><img src="/img/civ-v-problem.jpg"/><figcaption>
+            <h4>I have a bit of a problem with Civ V</h4>
+        </figcaption>
+</figure>
+
+<p>Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable. Island maps are not too enjoyable for me since there is a good chance that one or more civs will be isolated for the first part of the game. This increases tech costs and reduces some of the interesting interactions the AI can provide.</p>
+<p>However, one such interaction that I <em>don&rsquo;t</em> enjoy is the missionary spam generated by certain leaders. At higher difficulties, the seemingly endless stream of missionaries and prophets becomes tiresome. Keep inquisitors on hand is a chore and not a great use of faith points. To my knowledge, the game does not provide a way of tuning religious behavior. Religion is either on or off, no middle ground. I did a half-hearted search for mods that tuned religion but are all for more complicated than what I want. I just want to reduce the religious unit harassment!</p>
+<h3 id="getting-the-sdk">Getting the SDK</h3>
+<p>Civilization V has two forms of mods. The first version uses Lua, XML, custom databases, or any combination of these. These do not require modifications to the core DLL and are considered to be less of a hassle to produce. Since the behavior that I&rsquo;m looking for is not exposed to as a simple <code>functionCallToLua()</code> that means I have to go the DLL route. Fortunately, the core game source is distributed with the Civ V SDK.</p>
+<ol>
+<li>If you haven&rsquo;t already acquired the SDK, you can download it from steam. Search for Sid Meier&rsquo;s Civilization V SDK.</li>
+<li>Once installed, find the folder named CvGameCoreSource. It should be located at <code>&lt;steam_installation_base&gt;\steamapps\common\Sid Meier's Civilization V SDK\CvGameCoreSource</code>.</li>
+<li>Copy this entire directory to your preferred development directory, e.g. <code>D:\software\</code>. This does two things. First, the default installation path (<code>C:\Program Files</code>) can only be written by administrators which makes compilation a hassle. Second, having a backup of the source is good for when things go pear-shaped.</li>
+<li>Take this opportunity to initialize a git repo at the root of this new folder. <code>git init</code> will suffice.</li>
+<li>Add a gitignore will something along these lines.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/BuildTemp/
+</span></span><span class="line"><span class="cl">/.vs/
+</span></span><span class="line"><span class="cl">*.ncb
+</span></span><span class="line"><span class="cl">/BuildOutput/
+</span></span><span class="line"><span class="cl">*.suo
+</span></span><span class="line"><span class="cl">*.user
+</span></span><span class="line"><span class="cl">*.aps</span></span></code></pre></div>
+<ol start="6">
+<li>
+<p>The SDK was written with VC90. This compiler version is distributed with Visual Studio 2008 and can be found after a few minutes of Googling. Download and install the express version.</p>
+<ul>
+<li>Optionally, grab the latest version of Visual Studio which is currently 2019. If you like VS 2008 then there is no need to perform this step. I prefer the IDE features in 2019 so that&rsquo;s what I use.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="building-the-sdk">Building the SDK</h3>
+<p>At this point, we&rsquo;re ready to open the project in your IDE. While I&rsquo;m sure you <em>could</em> get this to compile and debug from VS Code or CLion, I don&rsquo;t think it is worth the effort. This is not a cross-platform project so just use the right tool for the job. If you chose to use VS 2019, you can download the SLN project file <a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL.vs2019.sln">I&rsquo;ve already created</a>. Open the SLN file in the appropriate version of VS when you&rsquo;re ready to continue.</p>
+<ol>
+<li>
+<p>Make sure you&rsquo;ve created your initial git commit with the provided ignore file. If you added a new SLN file, make sure that gets added too. For VS 2019 users, make sure to check that v90 is selected for the projects&rsquo; platform toolset. Right-click on each project and navigate to <code>Properties-&gt;General-&gt;Platform Toolset</code> to check this setting.</p>
+</li>
+<li>
+<p>There are three projects in the solution, each containing the name <code>CvGameCoreDLL</code>. The first project is the original game. <code>_Expansion1</code> is Gods and Kids, and <code>_Expansion2</code> is Brave New World. Since we&rsquo;re talking about modifying religion, we will be using the <code>_Expansion2</code> project. Right-click on the other two projects and select &ldquo;Unload Project&rdquo; This prevents us from modifying the wrong source files since each project has mostly the same code, more or less.</p>
+</li>
+<li>
+<p>If you were to try and compile, you&rsquo;d immediately get an error, The express version of VS does not include <code>afxres.h</code> which is required for resource file compilation. Find all files in the project ending with <code>.rc</code> and perform the following changes:</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="hl"><span class="lnt">11
+</span></span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Generated from the TEXTINCLUDE 2 resource.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// #include &#34;afxres.h&#34; //&lt; Comment this out
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;windows.h&#34;   //&lt; Add this</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<ol start="4">
+<li>
+<p>Don&rsquo;t forget to git commit!</p>
+</li>
+<li>
+<p>Click build in your IDE. The process should complete with some warnings that we&rsquo;ll be ignoring. You may see red squiggles for some of the template classes but we&rsquo;ll be ignoring those too.</p>
+</li>
+</ol>
+<hr>
+<h3 id="learning-the-code">Learning the Code</h3>
+<p>All the hard work is complete. Now for the fun part of reading and learning about the code. What I like to do with new codebases is to pick some aspect of the program that I understand how to trigger and then read through the code flow surrounding it. For example, barbarian spawning. Try to find the code the controls when barbarians <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. As a hint, all the interesting code will be in the <code>Source Files</code> directory and begin with <code>Cv</code>.</p>
+<p>Since we&rsquo;re looking for code that affects religion, <code>CvReligionClasses.cpp</code> seems like a great place to start.</p>
+<figure><img src="/img/civ-v-classes.jpg"/><figcaption>
+            <h4>Best. Function. Names. Ever.</h4>
+        </figcaption>
+</figure>
+
+<p>Fortunately, the developers gave excellent function and variable names so finding what we need an intuiting what we don&rsquo;t is a fairly straight forward process. These two functions have roughly the same logic where religion is the religion being spread and holy city is the birthplace of the said religion.</p>
+<ol>
+<li>Only spread religion, not pantheon</li>
+<li>Only spread religion if the holy city has already been created</li>
+<li>If this religion&rsquo;s holy city was converted, convert it back and end</li>
+<li>If the caller only wants to spread post-enhancement, abort</li>
+<li>Otherwise, score each city using the following formula <code>(h / d) * n</code> where <code>h</code> is the count of non-believers, <code>d</code> is the distance from this city to our holy city, and <code>n</code> is 3 if current religion is not ours and current religion is a not a pantheon.</li>
+<li>Calculate the political impact of spreading to each city using a similar formula.</li>
+<li>Take the highest scoring city.</li>
+</ol>
+<p>There are lots of parameters we can tune tweak to alter how cities are chosen. One idea would be to modify the scoring equation to maybe not pick on us as much. Notice that the formula does not have any bias towards human players. The AI will harass all parties equally. An even easier solution can be found by looking at the outermost control of the player loop. The code reads</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">4706
+</span><span class="lnt">4707
+</span><span class="lnt">4708
+</span><span class="lnt">4709
+</span><span class="lnt">4710
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">iPlayerLoop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">iPlayerLoop</span> <span class="o">&lt;</span> <span class="n">MAX_CIV_PLAYERS</span><span class="p">;</span> <span class="n">iPlayerLoop</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>   
+</span></span><span class="line"><span class="cl">    <span class="n">CvPlayer</span> <span class="o">&amp;</span><span class="n">kLoopPlayer</span> <span class="o">=</span> <span class="n">GET_PLAYER</span><span class="p">((</span><span class="n">PlayerTypes</span><span class="p">)</span><span class="n">iPlayerLoop</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">kLoopPlayer</span><span class="p">.</span><span class="n">isAlive</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">iPlayerLoop</span> <span class="o">!=</span> <span class="n">m_pPlayer</span><span class="o">-&gt;</span><span class="n">GetID</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Wouldn&rsquo;t it be cool if they just skipped us entirely? We just need a way to tell if the player is <em>us</em> or another AI. We can inspect the properties of kLoopPlayer which is of type <code>CvPlayer</code>. Conveniently, there is a function that sounds like it will do what we need. <code>bool isHuman() const;</code> is listed in the <code>CvPlayer.h</code> file and if we inspect all references to this function, the current usage implies that it will return true if the instance is not an AI. Let&rsquo;s give it a shot. <code>!kPlayerLoop.isHuman()</code> should do the trick.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">4706
+</span><span class="lnt">4707
+</span><span class="lnt">4708
+</span><span class="lnt">4709
+</span><span class="lnt">4710
+</span><span class="lnt">4711
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">iPlayerLoop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">iPlayerLoop</span> <span class="o">&lt;</span> <span class="n">MAX_CIV_PLAYERS</span><span class="p">;</span> <span class="n">iPlayerLoop</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Only spread to living AI players
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">CvPlayer</span> <span class="o">&amp;</span><span class="n">kLoopPlayer</span> <span class="o">=</span> <span class="n">GET_PLAYER</span><span class="p">((</span><span class="n">PlayerTypes</span><span class="p">)</span><span class="n">iPlayerLoop</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">kLoopPlayer</span><span class="p">.</span><span class="n">isAlive</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">iPlayerLoop</span> <span class="o">!=</span> <span class="n">m_pPlayer</span><span class="o">-&gt;</span><span class="n">GetID</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">kPlayerLoop</span><span class="p">.</span><span class="n">isHuman</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Make this change in <code>CvReligionClasses::ChooseProphetConversionCity</code> and a similar change in <code>CvReligionClasses::ChooseMissionaryTargetCity</code>. Compile the code to make sure everything is still working.</p>
+<hr>
+<h3 id="testing-and-debugging">Testing and Debugging</h3>
+<p>Now we can test our new mod. If you want to get a handle on how this game works, it is supremely helpful to know how to attach the debugger to your running game. To make the debugging experience easier, we need to make sure we enable debug symbols. Check that <code>Properties-&gt;C/C++-&gt;General-&gt;Debug Information Format</code> is set to Program Database. While you&rsquo;re there, let&rsquo;s update the output file name to match the name of the DLL that Civ will expect. Set <code>Properties-&gt;Linker-&gt;General-&gt;Output File</code> to <code>$(OutDir)CvGameCore_Expansion2.dll</code>.</p>
+<p><a href="https://github.com/corytodd/CivVDLLMod/blob/master/deploy.bat">Here</a> is the deployment script that I use to push my DLL and PDBs to the Civ runtime directory. <em>This must be run as admin if you have Steam installed to the default location</em>. Once you have the DLLs and PDBs in place, launch Civ V.</p>
+<ol>
+<li>Wait for Civ V to fully load</li>
+<li>Start a local game with your favorite configuration</li>
+<li>Once the game starts and your settler and warrior are on screen, switch back to Visual Studio.
+<ul>
+<li>Pro-tip:  Unbind the mouse from the game by <code>Settings-&gt;Interface Options-&gt;Bind Mouse</code> to Never.</li>
+</ul>
+</li>
+<li>From VS, <code>Debug-&gt;Attach to Process</code></li>
+<li>Connection type should be <code>default</code>, target should be the name of your computer. Attach to should say <code>Automatic: Native code</code>. Scroll through the process list to find <code>CivilizationV_DX11.exe</code> and click Attach.</li>
+<li>Ctrl+alt+break</li>
+<li>The game should now be paused. Clicking on the UI should not work. Depending on what the game was doing at the time, you may or may not see meaningful code at the breakpoint.</li>
+</ol>
+<p>We&rsquo;re nearly there. If you&rsquo;ve made it this far, you have successfully built a modded DLL, loaded it into Civ, and attached your debugger. Click F5 to let the game continue running.</p>
+<p>Religion usually takes a few turns to establish and then a few more turns before the AI starts harassing you. You can either play and just wait to see if the AI leaves you alone or you play with your new debugger. Let&rsquo;s do the latter. We&rsquo;ll start by finding some interesting places to place breakpoints.</p>
+<p>One quick place to add a breakpoint is in <code>CvUnit::getName</code>. This called whenever the player selects a unit and is used to look up the custom or default name. If the breakpoint is a red circle, that means the breakpoint installation worked. If it is white with a red ring, that means you might not have loaded the DLL or PDBs properly. Try the previous section again.</p>
+<p>With the breakpoint in place, hit F5 to continue the game. Select either your warrior or settler which should trigger the breakpoint. From here, you should see</p>
+<figure><img src="/img/civ-v-cvunit.jpg"/><figcaption>
+            <h4>CvUnit Locals</h4>
+        </figcaption>
+</figure>
+
+<p>Dig into the properties of <code>this</code> to see all the code that a unit is composed of. You can modify strength, defense, move counts, and just about anything else imaginable. There are many, many classes in Civ V so I suggest reading experimenting with more breakpoints to learn more about the inner workings of the game.</p>
+<hr>
+<h3 id="future-work">Future Work</h3>
+<p>This kind of change would be great to have an option for in the game setup menu. Future work could add all the mechanics required to expose this feature as an option. Another improvement would be to have a mechanic that discourages AI from harassing you if you&rsquo;re on good terms. This is a big hammer for a small problem that some people may consider more of a cheat than anything. I think these quality-of-life improvements enhance my experience. These are the types of improvements that let me focus on the aspects of the game that I love.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://github.com/corytodd/CivVDLLMod/blob/master/CvGameCoreDLL_Expansion2/CvBarbarians.cpp#L658"><code>CvBarbarians::DoSpawnBarbarianUnit</code></a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Day 0 with Kivy Pi</title>
+			<link>https://corytodd.us/posts/day-0/</link>
+			<pubDate>Fri, 24 Apr 2020 15:37:53 -0700</pubDate>
+			
+			<guid>https://corytodd.us/posts/day-0/</guid>
+			<description>Starting Fresh After years of neglect, it is time to revive this website. Instead of making promises about the future, let&amp;rsquo;s jump right in with some Raspberry Pi!
+I&amp;rsquo;ve been using Pi since the version 1 days and still can&amp;rsquo;t believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7&amp;quot; touchscreen integrated into a Cana case which I find extremely convenient.</description>
+			<content type="html"><![CDATA[<h2 id="starting-fresh">Starting Fresh</h2>
+<p>After years of neglect, it is time to revive this website. Instead of making promises about the future, let&rsquo;s jump right in with some Raspberry Pi!</p>
+<p>I&rsquo;ve been using Pi since the version 1 days and still can&rsquo;t believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7&quot; touchscreen integrated into a Cana case which I find extremely convenient. After having blown up my last board with a stray screw falling directly between power and (apparently) critical IO pins. Having a case protects the board from me.  💥</p>
+<p>I was very excited to learn that Ubuntu 20.04 <a href="https://wiki.ubuntu.com/FocalFossa/ReleaseNotes">will include Pi support</a>. Don&rsquo;t get me wrong, I enjoy Raspbian and all the other images but playing with new distros is always fun. There is an excellent image provided by <a href="http://ct.exton.se/?p=950">Exton</a> that has everything you need for a quick and easy setup. My goal for this project is to get Kivy up and running with my touchscreen. Time to burn the image!</p>
+<p>On first boot, the system is responsive and my 7&quot; touchscreen is working right out of the box. Networking is functional and
+all I have to do is resize the file system and setup my SSH keys. After a quick reboot, we&rsquo;re ready to rock.</p>
+<p>For the uninitiated, Kivy is a cross-platform Python-based GUI framework that supports multi-touch apps. Having experience mixed results with PyQt on my touchscreen, I thought Kivy would be an interesting experiment at the very least. Reviewing the installation procedure quickly revealed that this would not be a simple <code>pip</code> or <code>apt</code> installation process.</p>
+<p>The first problem is that Kivy does not support Python 3.8 which is what our distro is shipping with. This appears to be an issue with Cython related to <a href="https://www.python.org/dev/peps/pep-0570/">PEP-570</a>. The next best version is Python 3.7 which, to my knowledge, does not have a functional apt or snap source. Building from source should be easy enough.</p>
+<p>Let&rsquo;s do a quick update and grab the tools needed to build Python.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install build-essential tk-dev libncurses5-dev  <span class="se">\ </span>
+</span></span><span class="line"><span class="cl">  libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev <span class="se">\ </span>
+</span></span><span class="line"><span class="cl">  libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev         <span class="se">\ </span>
+</span></span><span class="line"><span class="cl">  liblzma-dev zlib1g-dev libffi-dev</span></span></code></pre></div>
+<p>At the time of this writing, 3.7.7 was the latest 3.7 version available. Replace 3.7.x as needed.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget -P ~/ https://www.python.org/ftp/python/3.7.x/Python-3.7.x.tgz
+</span></span><span class="line"><span class="cl">tar zxf Python-3.7.x.tgz</span></span></code></pre></div>
+<p>But wait! My board only has 1GB of RAM and I&rsquo;ve been bitten before with OOM errors hours into a build. To avoid that, let&rsquo;s make a quick swapfile to alleviate some of the pressure. It is important to note that if you&rsquo;re using an SD card, a swapfile will rapidly degrade your card so use this feature sparingly. This will create a 1.2 GB swap which should be more than enough to compile Python.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo dphys-swapfile setup
+</span></span><span class="line"><span class="cl">sudo dphys-swapfile swapon </span></span></code></pre></div>
+<p>Check that the swapfile is available</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ct@lab:~$ free -h
+</span></span><span class="line"><span class="cl">              total        used        free      shared  buff/cache   available
+</span></span><span class="line"><span class="cl">Mem:          926Mi       200Mi       472Mi       5.0Mi       253Mi       667Mi
+</span></span><span class="line"><span class="cl">Swap:         1.2Gi          0B       1.2Gi</span></span></code></pre></div>
+<p>Now we can punch in a few commands to let Python build itself. On the first invocation of <code>make</code> the final message suggested enabling an optimized build. Loving all this fast, I obliged.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Python Python-3.7.x
+</span></span><span class="line"><span class="cl">./configure --enable-optmizations
+</span></span><span class="line"><span class="cl">make -j <span class="m">4</span>
+</span></span><span class="line"><span class="cl">sudo make altinstall</span></span></code></pre></div>
+<p>I went and watched Captain America with my wife. When I came back, it was nearly done so I played one more turn of Civ.</p>
+<hr>
+<h2 id="a-brave-new-python">A Brave New Python</h2>
+<p>The next day I was pleasantly surprised to see that the build had completed sometime in the night. Time to move on!</p>
+<p>First, we need to make Python3.7 the new system default so we don&rsquo;t accidentally install Kivy to the 3.8 site package. Assuming that <code>/usr/bin/python</code> is just a symbolic link to an explicit version of Python, let&rsquo;s update that</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -sf /usr/bin/python3.7 /usr/bin/python</span></span></code></pre></div>
+<p>A quick check <code>python --version</code> should reveal <code>Python 3.7.x</code>. Great, now we can proceed with the Kivy build.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install libsdl2-dev libsdl2-image-dev                 <span class="se">\ </span>
+</span></span><span class="line"><span class="cl">  libsdl2-mixer-dev libsdl2-ttf-dev pkg-config libgl1-mesa-dev <span class="se">\ </span>
+</span></span><span class="line"><span class="cl">  libgles2-mesa-dev python-setuptools libgstreamer1.0-dev      <span class="se">\ </span>
+</span></span><span class="line"><span class="cl">  gstreamer1.0-plugins-<span class="o">{</span>bad,base,good,ugly<span class="o">}</span>                    <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  gstreamer1.0-<span class="o">{</span>tools,alsa<span class="o">}</span> python-dev libmtdev-dev xclip xsel <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  libjpeg-dev libpango-1.0-0</span></span></code></pre></div>
+<p>What&rsquo;s funny is that for years, I never knew you could use <code>{sub,package,name}</code> tags in apt. So many wasted keystrokes. We&rsquo;re almost done, just a few more things to take care of. Make sure your swapfile is still on if you rebooted.</p>
+<p>I was unable to get Cython + Kivy working <em>without</em> global installation. You can try the <code>--user</code> install flag but I couldn&rsquo;t get things to work out. If you go the user route, be sure to add <code>~/.local/bin</code> to your path.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo pip install Cython
+</span></span><span class="line"><span class="cl">python -m pip install --upgrade --user pip setuptools
+</span></span><span class="line"><span class="cl">git clone https://github.com/kivy/kivy ~/kivy
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ~/kivy
+</span></span><span class="line"><span class="cl">python -m pip install --user .</span></span></code></pre></div>
+<p>This took even longer than the Python compilation so the wife and I watched Captain Marvel and played another round of Civ.</p>
+<hr>
+<h2 id="fresh-baked-kivy">Fresh Baked Kivy</h2>
+<p>The next day, I was again pleasantly surprised to see a successful installation. I quickly tested the install by opening a python shell:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ct@lab:~/$ python
+</span></span><span class="line"><span class="cl">Python 3.7.0 <span class="o">(</span>default, Apr <span class="m">24</span> 2020, 05:27:58<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>GCC 9.3.0<span class="o">]</span> on linux
+</span></span><span class="line"><span class="cl">Type <span class="s2">&#34;help&#34;</span>, <span class="s2">&#34;copyright&#34;</span>, <span class="s2">&#34;credits&#34;</span> or <span class="s2">&#34;license&#34;</span> <span class="k">for</span> more information.
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; import kivy
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Logger      <span class="o">]</span> Record log in /home/ct/.kivy/logs/kivy_20-04-25_20.txt
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Kivy        <span class="o">]</span> v1.11.1
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Kivy        <span class="o">]</span> Installed at <span class="s2">&#34;/home/ct/.local/lib/python3.7/site-packages/kivy/__init__.py&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Python      <span class="o">]</span> v3.7.0 <span class="o">(</span>default, Apr <span class="m">24</span> 2020, 05:27:58<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>GCC 9.3.0<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Python      <span class="o">]</span> Interpreter at <span class="s2">&#34;/usr/bin/python&#34;</span>
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt;</span></span></code></pre></div>
+<p>It works! Just a few permissions to check and we&rsquo;re done. Your user should be in both the <code>input</code> and <code>video</code> groups to properly run a Kivy app. This took some trial and error to get right but here is the gist.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -a -G video <span class="k">$(</span>whoami<span class="k">)</span>
+</span></span><span class="line"><span class="cl">sudo usermod -a -G input <span class="k">$(</span>whoami<span class="k">)</span>
+</span></span><span class="line"><span class="cl">sudo chmod g+rw /dev/vchiq
+</span></span><span class="line"><span class="cl">sudo chgrp video /dev/vchiq
+</span></span><span class="line"><span class="cl">sudo bash -c <span class="s1">&#39;echo &#39;</span><span class="nv">SUBSYSTEM</span><span class="o">==</span><span class="s2">&#34;vchiq&#34;</span>,GROUP<span class="o">=</span><span class="s2">&#34;video&#34;</span>,MODE<span class="o">=</span><span class="s2">&#34;0660&#34;</span><span class="s1">&#39; &gt; /etc/udev/rules.d/80-vchiq-permissions.rules&#39;</span></span></span></code></pre></div>
+<p>With the new permissions in place, reboot or log out and back in so they can take effect. You should now be ready to test one of the demo apps.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ct@lab:~/kivy/examples/tutorials/pong$ python main.py
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Logger      <span class="o">]</span> Record log in /home/ct/.kivy/logs/kivy_20-04-25_24.txt
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Kivy        <span class="o">]</span> v1.11.1
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Kivy        <span class="o">]</span> Installed at <span class="s2">&#34;/home/ct/.local/lib/python3.7/site-packages/kivy/__init__.py&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Python      <span class="o">]</span> v3.7.0 <span class="o">(</span>default, Apr <span class="m">24</span> 2020, 05:27:58<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>GCC 9.3.0<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Python      <span class="o">]</span> Interpreter at <span class="s2">&#34;/usr/bin/python&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Factory     <span class="o">]</span> <span class="m">184</span> symbols loaded
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Image       <span class="o">]</span> Providers: img_tex, img_dds, img_sdl2, img_pil, img_gif <span class="o">(</span>img_ffpyplayer ignored<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Window      <span class="o">]</span> Provider: egl_rpi
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> Using the <span class="s2">&#34;OpenGL ES 2&#34;</span> graphics system
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> Backend used &lt;gl&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> OpenGL version &lt;b<span class="s1">&#39;OpenGL ES 2.0&#39;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> OpenGL vendor &lt;b<span class="s1">&#39;Broadcom&#39;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> OpenGL renderer &lt;b<span class="s1">&#39;VideoCore IV HW&#39;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> OpenGL parsed version: 2, <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> Shading version &lt;b<span class="s1">&#39;OpenGL ES GLSL ES 1.00&#39;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> Texture max size &lt;2048&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> Texture max units &lt;8&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Window      <span class="o">]</span> virtual keyboard not allowed, single mode, not docked
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Text        <span class="o">]</span> Provider: sdl2
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>ProbeSysfs  <span class="o">]</span> device match: /dev/input/event0
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>HIDInput    <span class="o">]</span> Read event from &lt;/dev/input/event0&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>Base        <span class="o">]</span> Start application main loop
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>GL          <span class="o">]</span> NPOT texture support is available
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>HIDMotionEvent<span class="o">]</span> using &lt;FT5406 memory based driver&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>HIDMotionEvent<span class="o">]</span> &lt;FT5406 memory based driver&gt; range ABS X position is <span class="m">0</span> - <span class="m">800</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>HIDMotionEvent<span class="o">]</span> &lt;FT5406 memory based driver&gt; range ABS Y position is <span class="m">0</span> - <span class="m">480</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>HIDMotionEvent<span class="o">]</span> &lt;FT5406 memory based driver&gt; range position X is <span class="m">0</span> - <span class="m">800</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>INFO   <span class="o">]</span> <span class="o">[</span>HIDMotionEvent<span class="o">]</span> &lt;FT5406 memory based driver&gt; range position Y is <span class="m">0</span> - <span class="m">480</span></span></span></code></pre></div>
+<h2 id="final-result">Final Result</h2>
+<figure><img src="/img/pong.jpg"/><figcaption>
+            <h4>Ping Pong Kivy Pi</h4>
+        </figcaption>
+</figure>
+
+]]></content>
+		</item>
+		
+	</channel>
+</rss>

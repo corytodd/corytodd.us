@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cory Todd</title>
+    <link>https://corytodd.us/</link>
+    <description>Recent content on Cory Todd</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 15 Apr 2022 11:41:42 -0700</lastBuildDate><atom:link href="https://corytodd.us/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My First Snap</title>
+      <link>https://corytodd.us/posts/my-first-snap/</link>
+      <pubDate>Fri, 15 Apr 2022 11:41:42 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/my-first-snap/</guid>
+      <description>Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time? Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service.</description>
+    </item>
+    
+    <item>
+      <title>KMDF Debugger Connection</title>
+      <link>https://corytodd.us/posts/kmdf-debug-connect/</link>
+      <pubDate>Sun, 25 Jul 2021 08:31:32 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/kmdf-debug-connect/</guid>
+      <description>In my previous post we covered the setup and deployment of a Windows driver to a virtual machine target. This post will walk you through the process of connecting WinDBG to the target to explore and step through the driver. By the end of this article, you will have symbols, breakpoints, WPP, and kdprint up and running.
+Requirements  WinDbg x64 (or the new preview version) TraceView from WDK  Driver Modification We&amp;rsquo;re going to start by modifying the driver to use KdPrint to show some debug information.</description>
+    </item>
+    
+    <item>
+      <title>KMDF Debugger Preparation</title>
+      <link>https://corytodd.us/posts/kmdf-debug-prep/</link>
+      <pubDate>Sat, 24 Jul 2021 09:58:23 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/kmdf-debug-prep/</guid>
+      <description>Developing drivers for Windows is enjoyable but getting up and running takes some time. Today we&amp;rsquo;ll be walking through the steps required to get a minimal debugger setup. In this post, we&amp;rsquo;ll be preparing for a fully function kernel mode debugger configuration. That includes getting all the tools installed, VMs provisioned, and a driver deployed.
+Environment  Host  Windows 10 x64 20H2 Visual Studio Community 2019 16.10.4 Windows Driver Kit Spectre Mitigated Libraries VMWare Workstation 16.</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio and The Mysterious Additional Includes</title>
+      <link>https://corytodd.us/posts/vs-mystery-includes/</link>
+      <pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/vs-mystery-includes/</guid>
+      <description>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about where your tools or how to get to them. If you&amp;rsquo;re building strictly for Windows, you don&amp;rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms of surprise and foot-guns.</description>
+    </item>
+    
+    <item>
+      <title>Git Merge Alias</title>
+      <link>https://corytodd.us/posts/git-sync/</link>
+      <pubDate>Sun, 28 Jun 2020 09:31:42 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/git-sync/</guid>
+      <description>I am a strong advocate for using a coherent branching model when collaborating on software projects. It can be a full git-flow pattern, maybe GitHub flow, or some hybrid between them. There as many ways to do it as there are developers. Just be self-consistent and we&amp;rsquo;ll work well together. One feature that&amp;rsquo;s common across all branching models is the need for your target branches in sync. For example, with git-flow you cannot finish a feature if your local develop is behind origin develop.</description>
+    </item>
+    
+    <item>
+      <title>Large Address Aware</title>
+      <link>https://corytodd.us/posts/large-address-aware/</link>
+      <pubDate>Fri, 26 Jun 2020 07:12:47 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/large-address-aware/</guid>
+      <description>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&amp;rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to.</description>
+    </item>
+    
+    <item>
+      <title>Dirmon Utility</title>
+      <link>https://corytodd.us/posts/dirmon-utility/</link>
+      <pubDate>Fri, 01 May 2020 15:02:59 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/dirmon-utility/</guid>
+      <description>I like to learn how programs work. Sometimes that means watching the installation process using several tools from Sysinternals1 or Nirsoft2. For today&amp;rsquo;s program of interest, I noticed a large number of files being written to the ProgramDirectory for this application. I found this a little suspicious since temporary and config files should typically be written to the appropriate %AppData% folder. The files did not stay on disk long enough for me to see their names but I saw them flash in the file explorer which was enough to make me curious about their nature.</description>
+    </item>
+    
+    <item>
+      <title>Civ V : Bad Religion</title>
+      <link>https://corytodd.us/posts/civ-v-bad-religion/</link>
+      <pubDate>Sun, 26 Apr 2020 09:33:09 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/civ-v-bad-religion/</guid>
+      <description>I have a bit of a problem with Civ V   Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable.</description>
+    </item>
+    
+    <item>
+      <title>Day 0 with Kivy Pi</title>
+      <link>https://corytodd.us/posts/day-0/</link>
+      <pubDate>Fri, 24 Apr 2020 15:37:53 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/day-0/</guid>
+      <description>Starting Fresh After years of neglect, it is time to revive this website. Instead of making promises about the future, let&amp;rsquo;s jump right in with some Raspberry Pi!
+I&amp;rsquo;ve been using Pi since the version 1 days and still can&amp;rsquo;t believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7&amp;quot; touchscreen integrated into a Cana case which I find extremely convenient.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://corytodd.us/about/</link>
+      <pubDate>Fri, 24 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://corytodd.us/about/</guid>
+      <description>Cory has been writing software for Windows, Linux, and embedded devices for more than 10 years. From the early days of programming text-based RPGs and his TI-83+ calculator, he has had a strong passion for solving interesting problems. He enjoys helping teams and systems work together by improving automation and identifying bottlenecks. Since completing his MS in computer science from Georgia Tech in 2018 he has found a renewed purpose in pursuing new knowledge.</description>
+    </item>
+    
+  </channel>
+</rss>

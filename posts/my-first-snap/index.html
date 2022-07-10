@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="My First Snap">
+<meta itemprop="description" content="Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time? Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service."><meta itemprop="datePublished" content="2022-04-15T11:41:42-07:00" />
+<meta itemprop="dateModified" content="2022-04-15T13:03:07-07:00" />
+<meta itemprop="wordCount" content="713"><meta itemprop="image" content="https://corytodd.us/img/coder_1.jpg"/>
+<meta itemprop="keywords" content="Snap,Linux," /><meta property="og:title" content="My First Snap" />
+<meta property="og:description" content="Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time? Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://corytodd.us/posts/my-first-snap/" /><meta property="og:image" content="https://corytodd.us/img/coder_1.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-15T11:41:42-07:00" />
+<meta property="article:modified_time" content="2022-04-15T13:03:07-07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://corytodd.us/img/coder_1.jpg"/>
+
+<meta name="twitter:title" content="My First Snap"/>
+<meta name="twitter:description" content="Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time? Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>My First Snap</title>
+	<link rel="stylesheet" href="https://corytodd.us/css/style.min.6b3ae8914885c12febe668e700a27cf5ff839cd06fd1ecabb5c62d91c301cc7a.css" integrity="sha256-azrokUiFwS/r5mjnAKJ89f+DnNBv0eyrtcYtkcMBzHo=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://corytodd.us">Cory Todd</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://corytodd.us/about-hugo/">About</a>
+				<a href="https://corytodd.us/posts/">Posts</a>
+				<a href="https://corytodd.us/resume/">Experience</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://linkedin.com/in/cory-todd" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/corytodd" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://gitlab.com/corytodd" target="_blank" rel="noopener me" title="Gitlab"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"></path></svg></a><a href="https://stackoverflow.com/users/1755158" target="_blank" rel="noopener me" title="Stackoverflow"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.913 16.041v6.848h17.599v-6.848M7.16 18.696h8.925M7.65 13.937l8.675 1.8M9.214 9.124l8.058 3.758M12.086 4.65l6.849 5.66M15.774 1.111l5.313 7.162"/></svg></a><a href="https://corytodd.us/gpg" target="_blank" rel="noopener me" title="Gpg"><svg class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"> <g transform="translate(0 -142.26666)"> <g> <path d="M11.4,142.5c-4.2,0-7.6,3.4-7.6,7.6v3.7H2.5l0.1,5.9c1.3-1.7,3.3-3.2,6.6-3.4c4.6-0.3,7-1.1,8.5-1.8l0,0l0,0l0,0l0,0l0,0 l0,0l0,0l0,0l0,0c0,0,0,0,0.1,0l0,0l0,0l0,0h0l0,0l0,0l0,0l0,0l0,0h0c0,0,0,0,0.1,0h0h0l0.1,0h0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0 l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0h0l0,0l0,0h0l0,0h0h0l0,0h0h0h0l0,0l0,0h0l0,0l0,0c0,0,0,0,0.1,0v-3.7 C19,145.9,15.6,142.5,11.4,142.5L11.4,142.5z M7.3,153.9v-3.7c0-2.3,1.8-4.1,4.1-4.1c2.3,0,4.1,1.8,4.1,4.1v3.7H7.3L7.3,153.9z M20.3,155.3L20.3,155.3c-2.1,2.2-5.2,4.3-9.4,4.3c0.6,0.1,1.3,0.1,1.9,0.1c2,0,3.7-0.4,4.8-1c0.9-0.5,2.2-1.3,2.5-1.3 c0.2,0,0.1,0.3-0.4,1c-1.5,2-4.2,4.2-10.9,4.2c-0.1,0-0.3,0-0.4,0c1.2,0.3,2.6,0.4,4,0.4c1.3,0,2.5-0.1,3.4-0.3 c1.1-0.3,2.1-0.9,2.4-0.9c0.2,0,0,0.2-0.5,0.8c-1.5,1.5-4.4,2.7-7.1,2.7c-0.1,0-0.2,0-0.3,0c-0.6,0-1.1,0-1.5,0 c-1.2,0-2.2,0.1-3.4,0.8h15.2V155.3L20.3,155.3z"/> </g> </g> </svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://corytodd.us/about-hugo/">About</a></li>
+			<li><a href="https://corytodd.us/posts/">Posts</a></li>
+			<li><a href="https://corytodd.us/resume/">Experience</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta">
+					<span>
+						<p>
+							Apr 15, 2022
+							&#183;
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+							
+								
+							
+							4 minute read
+						</p>
+					</span>
+				</div>
+				<h1>My First Snap</h1>
+			</header>
+			<div class="content">
+				<p>Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time?
+Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology
+to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service. In a nutshell, snaps provide a sandboxed
+environment in which developers can bundle their apps including all their weird dependencies. Developers win by eliminating the friction of complicated setups. Users win by being
+able to run more applications more easily and more securely, at least in theory. We&rsquo;ll test both sides of the experience in this article.</p>
+<h2 id="the-binary">The Binary<a href="#the-binary" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>I needed a simple application to quickly perform trivial transforms on data like XOR, hex encoding, and binary encoding in a specific output format. Instead of making a complicated
+chain of pipes, I chose to write my app. Since I use this application on multiple lab and VM machines I thought it would be cool to have it available as a snap.</p>
+<h2 id="the-process">The process<a href="#the-process" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ol>
+<li>
+<p>Install <code>snapd</code> using your preferred package manager (if not already installed)</p>
+</li>
+<li>
+<p>Install <code>snapcraft</code> using snap itself</p>
+<p><code>$ sudo snap install snapcraft --classic</code></p>
+</li>
+<li>
+<p>Write your code to do its thing (mask in this case)</p>
+</li>
+<li>
+<p>Define your snap file in YAML</p>
+</li>
+<li>
+<p>Build your snap</p>
+<p><code>snapcraft</code></p>
+</li>
+<li>
+<p>Install and test your snap</p>
+<p><code>$ sudo snap install --devmode path/to/your_package.snap</code></p>
+</li>
+</ol>
+<h2 id="cmake-specifics">CMake specifics<a href="#cmake-specifics" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>The snap system uses what are called plugins which serve as the driver for building your code. I am most interested in CMake so we&rsquo;ll be going over its specifics.</p>
+<p>Regardless of your plugin, you need this metadata stanza to describe your package:</p>
+<pre><code>name: mask
+base: core20
+version: '0.1'
+summary: The binary masking tool
+description: |
+This tool provides basic binary operations like XOR and HEX on string
+or stdin inputs. Nothing special, just wanted to write a snap.
+</code></pre>
+<p>During development, you can set these values to allow unrestricted access to the system. You&rsquo;ll need to tighten this up before publishing.</p>
+<pre><code>grade: devel
+confinement: devmode
+</code></pre>
+<p>This section is what exposes features in your package. In this case, we have our binary compiled and installed to <code>/usr/bin</code> within our sandbox. Note that our
+package name is <code>mask</code> which matches the command <code>mask</code>. Snaps are called using <code>package name</code>.<code>command</code> name syntax but if the package name and command are
+the same it will be simplified, in this case to <code>mask</code>. Also not the lack of leading forward slash on the command.</p>
+<pre><code>apps:
+  mask:
+    command: usr/bin/mask
+</code></pre>
+<p>Now for the CMake specific stuff! Here we&rsquo;re telling snapcraft to use the CMake builder, specifying that our CMakeList.txt file is in the current directory (.),
+and to place our install under <code>/usr</code>. Finally, our program requires g++ to compile so we will include that in our build packages list. If you are writing a
+C application then you would use GCC or whatever C compiler you need. We don&rsquo;t have any other dependencies so this is a brief list.</p>
+<pre><code>parts:
+  cmake-build:
+    plugin: cmake
+    cmake-parameters:
+            - -DCMAKE_INSTALL_PREFIX=/usr
+    source: .
+    build-packages:
+            - g++
+</code></pre>
+<p>The CMake builder plugin issues an install command so your CMakeList.txt file must define an install directive. We achieve this with</p>
+<pre><code>install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+</code></pre>
+<h2 id="final-verdict">Final Verdict<a href="#final-verdict" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>The whole process took about 20 minutes which is in line with the suggested time on the snapcraft IO tutorial site. Overall, the docs were sufficient and I did not
+have much trouble after switching to my Fedora box. My first attempt was on WSL which kinda-sorta worked but <code>snapd</code> kept crashing. The CMake-specific stuff took a
+few minutes to figure out. Specifically, the compiler had to be listed in the build-package section. The reasoning makes sense now that I&rsquo;m familiar with the
+process. Also, the explicit CMake install directive was missing in my first iteration but since I know CMake, this wasn&rsquo;t an issue. A developer less experienced with
+CMake may have gotten stuck here. I think the CMake plugin should throw an error if there is no install target defined in the CMakeList.txt.</p>
+<p>Snaps deliver on its promise and I&rsquo;d love to see the technology ported to Windows.</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://corytodd.us/tags/snap">Snap</a></span><span class="tag"><a href="https://corytodd.us/tags/linux">Linux</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>713 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-04-15 18:41 &#43;0000</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/corytodd/corytodd.us/commit/2e170b58cbcb5c5b8abd72ccb0bb5193cbb39e8f" target="_blank" rel="noopener">2e170b5</a> @ 2022-04-15</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://corytodd.us/posts/kmdf-debug-connect/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>KMDF Debugger Connection</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2022 <a href="https://corytodd.us">Cory Todd</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://corytodd.us/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://corytodd.us/js/bundle.min.5a42c67b729ee2fa1059251688235399704707e04edb4e28c42c6f6dfa49d1d9.js" integrity="sha256-WkLGe3Ke4voQWSUWiCNTmXBHB+BO204oxCxvbfpJ0dk=" crossorigin="anonymous"></script>
+	
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44428097-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

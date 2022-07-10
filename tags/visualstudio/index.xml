@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VisualStudio on Cory Todd</title>
+    <link>https://corytodd.us/tags/visualstudio/</link>
+    <description>Recent content in VisualStudio on Cory Todd</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 25 Jul 2021 08:31:32 -0700</lastBuildDate><atom:link href="https://corytodd.us/tags/visualstudio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KMDF Debugger Connection</title>
+      <link>https://corytodd.us/posts/kmdf-debug-connect/</link>
+      <pubDate>Sun, 25 Jul 2021 08:31:32 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/kmdf-debug-connect/</guid>
+      <description>In my previous post we covered the setup and deployment of a Windows driver to a virtual machine target. This post will walk you through the process of connecting WinDBG to the target to explore and step through the driver. By the end of this article, you will have symbols, breakpoints, WPP, and kdprint up and running.
+Requirements  WinDbg x64 (or the new preview version) TraceView from WDK  Driver Modification We&amp;rsquo;re going to start by modifying the driver to use KdPrint to show some debug information.</description>
+    </item>
+    
+    <item>
+      <title>KMDF Debugger Preparation</title>
+      <link>https://corytodd.us/posts/kmdf-debug-prep/</link>
+      <pubDate>Sat, 24 Jul 2021 09:58:23 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/kmdf-debug-prep/</guid>
+      <description>Developing drivers for Windows is enjoyable but getting up and running takes some time. Today we&amp;rsquo;ll be walking through the steps required to get a minimal debugger setup. In this post, we&amp;rsquo;ll be preparing for a fully function kernel mode debugger configuration. That includes getting all the tools installed, VMs provisioned, and a driver deployed.
+Environment  Host  Windows 10 x64 20H2 Visual Studio Community 2019 16.10.4 Windows Driver Kit Spectre Mitigated Libraries VMWare Workstation 16.</description>
+    </item>
+    
+    <item>
+      <title>Civ V : Bad Religion</title>
+      <link>https://corytodd.us/posts/civ-v-bad-religion/</link>
+      <pubDate>Sun, 26 Apr 2020 09:33:09 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/civ-v-bad-religion/</guid>
+      <description>I have a bit of a problem with Civ V   Civilization 5 is one of my favorite ways to spend time. With each game just different enough to keep things interesting and an endless stream of short and long term goals, this game provides endless satisfaction. I play exclusively single player with the Brave New World DLC. The Pangea map on small is the sweet spot for my playstyle since any type of win is attainable.</description>
+    </item>
+    
+  </channel>
+</rss>

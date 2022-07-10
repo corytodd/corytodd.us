@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MSVC on Cory Todd</title>
+    <link>https://corytodd.us/tags/msvc/</link>
+    <description>Recent content in MSVC on Cory Todd</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 30 Jun 2020 13:51:51 -0700</lastBuildDate><atom:link href="https://corytodd.us/tags/msvc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Visual Studio and The Mysterious Additional Includes</title>
+      <link>https://corytodd.us/posts/vs-mystery-includes/</link>
+      <pubDate>Tue, 30 Jun 2020 13:51:51 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/vs-mystery-includes/</guid>
+      <description>There is no denying that Visual Studio is a fantastic tool. There is so much magic under the hood that you rarely have to think about where your tools or how to get to them. If you&amp;rsquo;re building strictly for Windows, you don&amp;rsquo;t need to change too much to make a useful GUI or console utility. If you peek at the project properties, there are mostly sane defaults with very little in terms of surprise and foot-guns.</description>
+    </item>
+    
+    <item>
+      <title>Large Address Aware</title>
+      <link>https://corytodd.us/posts/large-address-aware/</link>
+      <pubDate>Fri, 26 Jun 2020 07:12:47 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/large-address-aware/</guid>
+      <description>I recently encountered an interesting issue while integrating some legacy code into a 64-bit DLL. I can&amp;rsquo;t name the vendor nor the library but I will say it is a solid piece of software that works as advertised. One quirk of the 64-bit version is that it does not work binaries that are marked as large address aware (LAA). Up until recently, this has not been an issue because our compilers never set that flag, nor would it make sense to.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RaspberryPi on Cory Todd</title>
+    <link>https://corytodd.us/tags/raspberrypi/</link>
+    <description>Recent content in RaspberryPi on Cory Todd</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 24 Apr 2020 15:37:53 -0700</lastBuildDate><atom:link href="https://corytodd.us/tags/raspberrypi/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Day 0 with Kivy Pi</title>
+      <link>https://corytodd.us/posts/day-0/</link>
+      <pubDate>Fri, 24 Apr 2020 15:37:53 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/day-0/</guid>
+      <description>Starting Fresh After years of neglect, it is time to revive this website. Instead of making promises about the future, let&amp;rsquo;s jump right in with some Raspberry Pi!
+I&amp;rsquo;ve been using Pi since the version 1 days and still can&amp;rsquo;t believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7&amp;quot; touchscreen integrated into a Cana case which I find extremely convenient.</description>
+    </item>
+    
+  </channel>
+</rss>

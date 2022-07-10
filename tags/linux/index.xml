@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Cory Todd</title>
+    <link>https://corytodd.us/tags/linux/</link>
+    <description>Recent content in Linux on Cory Todd</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 15 Apr 2022 11:41:42 -0700</lastBuildDate><atom:link href="https://corytodd.us/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My First Snap</title>
+      <link>https://corytodd.us/posts/my-first-snap/</link>
+      <pubDate>Fri, 15 Apr 2022 11:41:42 -0700</pubDate>
+      
+      <guid>https://corytodd.us/posts/my-first-snap/</guid>
+      <description>Software dependency problems are always fun to solve. Have you ever had your application pick up the wrong shared library from your path and then crash at the worst possible time? Are you tired of trying to control which quirky version of a library you depend on? Full-stack developers solved this problem with containers and now we can use the same technology to build and share desktop applications. Canonical, the publisher of Ubuntu, has a technology called snaps that provides this service.</description>
+    </item>
+    
+  </channel>
+</rss>
