@@ -9,6 +9,15 @@
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Fri, 15 Apr 2022 11:41:42 -0700</lastBuildDate><atom:link href="https://corytodd.us/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Resume</title>
+      <link>https://corytodd.us/resume/</link>
+      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://corytodd.us/resume/</guid>
+      <description>Current Linux Kernel Engineer at Canonical with 10 years of experience specializing in the development of high-availability embedded devices, automated tooling, and performance optimization. I have production experience in designing and deploying modern machine learning and artificial intelligence solutions. My goal is to help teams produce great products by contributing my experience, willingness to learn and share, and by always trying to do the right thing. I love learning new programming languages and technologies, deep-diving into zero-day exploits, and finding new ways to be productive.</description>
+    </item>
+    
+    <item>
       <title>My First Snap</title>
       <link>https://corytodd.us/posts/my-first-snap/</link>
       <pubDate>Fri, 15 Apr 2022 11:41:42 -0700</pubDate>
@@ -90,15 +99,6 @@ Environment  Host  Windows 10 x64 20H2 Visual Studio Community 2019 16.10.4 Wind
       <guid>https://corytodd.us/posts/day-0/</guid>
       <description>Starting Fresh After years of neglect, it is time to revive this website. Instead of making promises about the future, let&amp;rsquo;s jump right in with some Raspberry Pi!
 I&amp;rsquo;ve been using Pi since the version 1 days and still can&amp;rsquo;t believe how capable the hardware is. With such an awesome community of developers and makers, just about anything you think of can be done with a Pi. I have the official 7&amp;quot; touchscreen integrated into a Cana case which I find extremely convenient.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://corytodd.us/about/</link>
-      <pubDate>Fri, 24 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://corytodd.us/about/</guid>
-      <description>Cory has been writing software for Windows, Linux, and embedded devices for more than 10 years. From the early days of programming text-based RPGs and his TI-83+ calculator, he has had a strong passion for solving interesting problems. He enjoys helping teams and systems work together by improving automation and identifying bottlenecks. Since completing his MS in computer science from Georgia Tech in 2018 he has found a renewed purpose in pursuing new knowledge.</description>
     </item>
     
   </channel>
