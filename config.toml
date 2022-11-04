@@ -77,7 +77,7 @@ googleAnalytics = "UA-44428097-5"
 
   [[params.social]]
     name = "gpg"
-    url = "https://corytodd.us/gpg"
+    url = "gpg/"
 
 [menu]
 

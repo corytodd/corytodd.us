@@ -1,7 +1,6 @@
 +++
 title = "GPG Keys"
-date = "2022-07-20"
-data_file = "gpg_partial.html"
+date = "2022-11-03"
 [ author ]
   name = "Cory Todd"
 +++
