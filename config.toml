@@ -36,7 +36,7 @@ googleAnalytics = "UA-44428097-5"
   dateformNumTime = "2006-01-02 15:04 -0700"
 
   # Metadata mostly used in document's head
-  description = "Software engineer"
+  description = "Software Engineer"
   images = ["img/coder_1.jpg"]
   themeColor = "#494f5c"
 
@@ -68,16 +68,8 @@ googleAnalytics = "UA-44428097-5"
     url = "https://github.com/corytodd"
 
   [[params.social]]
-    name = "gitlab"
-    url = "https://gitlab.com/corytodd"
-
-  [[params.social]]
-    name = "stackoverflow"
-    url = "https://stackoverflow.com/users/1755158"
-
-  [[params.social]]
     name = "gpg"
-    url = "gpg/"
+    url = "https://corytodd.us/key-1E0B1AE0.pub.txt"
 
 [menu]
 

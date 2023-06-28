@@ -1,6 +1,6 @@
 +++
 title = "Resume"
-date = "2022-07-10"
+date = "2023-06-27"
 [ author ]
   name = "Cory Todd"
 +++
@@ -17,6 +17,8 @@ and finding new ways to be productive. My hobbies include geeking out with bakin
 _July 2022 - Present_
 
 * Responsible for maintaining a variety of kernel flavors
+* Building automation for code review and kernel maintenance
+* Revamping the kernel code review process
 
 **[Pyramid Technologies](https://pyramidacceptors.com/), Mesa, AZ — Senior Software Engineer** |
 _July 2017  - July 2022_
