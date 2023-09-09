@@ -69,7 +69,7 @@ googleAnalytics = "UA-44428097-5"
 
   [[params.social]]
     name = "gpg"
-    url = "https://corytodd.us/key-1E0B1AE0.pub.txt"
+    url = "https://corytodd.us/key.asc"
 
 [menu]
 
