@@ -59,9 +59,9 @@ googleAnalytics = "UA-44428097-5"
 
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
-  [[params.social]]
-    name = "linkedin"
-    url = "https://linkedin.com/in/cory-todd"
+  # [[params.social]]
+  #  name = "linkedin"
+  #  url = "https://linkedin.com/in/cory-todd"
 
   [[params.social]]
     name = "github"
