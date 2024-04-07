@@ -1,24 +1,26 @@
 +++
 title = "Resume"
-date = "2023-06-27"
+date = "2024-04-06"
 [ author ]
   name = "Cory Todd"
 +++
 
-Current Linux Kernel Engineer at Canonical with 10 years of experience specializing
+Current Firmware Engineer at Motorola Solutions withh 10 years of experience specializing
 in the development of high-availability embedded devices, automated tooling, and performance optimization.
-I have production experience in designing and deploying modern machine learning and artificial intelligence solutions.
-My goal is to help teams produce great products by contributing my experience, willingness to learn and share, and by always trying
-to do the right thing. I love learning new programming languages and technologies, deep-diving into zero-day exploits,
-and finding new ways to be productive. My hobbies include geeking out with baking science, mountain biking, and keeping my 3D printer running.
 
 ### Experience
+**[Motorola Solutions](https://motorolasolutions.com), Los Angeles, CA - Senior Systems Engineer, Firmware** |
+_September 2023 - Present_
+
+* Board bring-up on new hardware and firmware projects
+* Improving the stability of current firmware and systems services
+* Introducing and leading the adoption of best practices for stable products
+
 **[Canonical](https://canonical.com/), Los Angeles, CA - Linux Kernel Engineer** |
 _July 2022 - September 2023_
 
 * Responsible for maintaining a variety of kernel flavors
-* Building automation for code review and kernel maintenance
-* Revamping the kernel code review process
+* Built automation for code review and kernel maintenance
 
 **[Pyramid Technologies](https://pyramidacceptors.com/), Mesa, AZ — Senior Software Engineer** |
 _July 2017  - July 2022_
