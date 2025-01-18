@@ -1,17 +1,18 @@
 +++
 title = "Resume"
-date = "2024-04-06"
+date = "2025-01-18"
 [ author ]
   name = "Cory Todd"
 +++
 
-Current Firmware Engineer at Motorola Solutions withh 10 years of experience specializing
+Current Firmware Engineer at Motorola Solutions with 13 years of experience specializing
 in the development of high-availability embedded devices, automated tooling, and performance optimization.
 
 ### Experience
-**[Motorola Solutions](https://motorolasolutions.com), Los Angeles, CA - Senior Systems Engineer, Firmware** |
+**[Motorola Solutions](https://motorolasolutions.com), Los Angeles, CA - Firmware Engineering Manager** |
 _September 2023 - Present_
 
+* Lead a team of five in the development of firmware products
 * Board bring-up on new hardware and firmware projects
 * Improving the stability of current firmware and systems services
 * Introducing and leading the adoption of best practices for stable products
