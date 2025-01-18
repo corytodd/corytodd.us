@@ -82,3 +82,7 @@ googleAnalytics = "UA-44428097-5"
     name = "Experience"
     url = "resume/"
     weight = 50
+
+[mediaTypes]
+  [mediaTypes.'text/plain']
+    suffixes = ['asc']
